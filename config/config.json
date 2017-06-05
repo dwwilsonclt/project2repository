@@ -1,9 +1,9 @@
 {
   "development": {
-    "username": "root",
-    "password": null,
-    "database": "blogger",
-    "host": "127.0.0.1",
+    "username": "bf342ede25de3e",
+    "password": "7c009d5c",
+    "database": "heroku_78c0f1a8b0ea1c1",
+    "host": "us-cdbr-iron-east-03.cleardb.net",
     "dialect": "mysql"
   },
   "test": {

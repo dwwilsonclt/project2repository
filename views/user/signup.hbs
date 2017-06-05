@@ -1,0 +1,108 @@
+<div class="content">
+    <form class="register-form" action="/signup" method="POST">
+        <h3 class="font-green">Sign Up</h3>
+        {{#if hasErrors}}
+            <div class="alert alert-danger">
+                {{#each messages}}
+                    <button class="close" data-close="alert"></button>
+                    <span> {{this}} </span>
+                {{/each}}
+            </div>
+        {{/if}}
+        <p class="hint"> Enter your personal details below: </p>
+        <div class="form-group">
+            <input class="form-control placeholder-no-fix" type="text" placeholder="First Name" name="firstname" required/>
+        </div>
+        <div class="form-group">
+            <input class="form-control placeholder-no-fix" type="text" placeholder="Last Name" name="lastname" required/>
+        </div>
+        <div class="form-group">
+            <input class="form-control placeholder-no-fix" type="text" placeholder="Email" name="email" required/>
+        </div>
+        <div class="form-group">
+            <input class="form-control placeholder-no-fix" type="text" placeholder="City" name="city" required/>
+        </div>
+        <div class="form-group">
+            <select name="state" class="form-control" required>
+                <option value="">State</option>
+                <option value="AL">AL</option>
+                <option value="AK">AK</option>
+                <option value="AZ">AZ</option>
+                <option value="AR">AR</option>
+                <option value="CA">CA</option>
+                <option value="CO">CO</option>
+                <option value="CT">CT</option>
+                <option value="DE">DE</option>
+                <option value="FL">FL</option>
+                <option value="GA">GA</option>
+                <option value="HI">HI</option>
+                <option value="ID">ID</option>
+                <option value="IL">IL</option>
+                <option value="IN">IN</option>
+                <option value="IA">IA</option>
+                <option value="KS">KS</option>
+                <option value="KY">KY</option>
+                <option value="LA">LA</option>
+                <option value="ME">ME</option>
+                <option value="MD">MD</option>
+                <option value="MA">MA</option>
+                <option value="MI">MI</option>
+                <option value="MN">MN</option>
+                <option value="MS">MS</option>
+                <option value="MO">MO</option>
+                <option value="MT">MT</option>
+                <option value="NE">NE</option>
+                <option value="NV">NV</option>
+                <option value="NH">NH</option>
+                <option value="NJ">NJ</option>
+                <option value="NM">NM</option>
+                <option value="NY">NY</option>
+                <option value="NC">NC</option>
+                <option value="ND">ND</option>
+                <option value="OH">OH</option>
+                <option value="OK">OK</option>
+                <option value="OR">OR</option>
+                <option value="PA">PA</option>
+                <option value="RI">RI</option>
+                <option value="SC">SC</option>
+                <option value="SD">SD</option>
+                <option value="TN">TN</option>
+                <option value="TX">TX</option>
+                <option value="UT">UT</option>
+                <option value="VT">VT</option>
+                <option value="VA">VA</option>
+                <option value="WA">WA</option>
+                <option value="WV">WV</option>
+                <option value="WI">WI</option>
+                <option value="WY">WY</option>
+            </select>
+        </div>
+        <p class="hint"> Enter your account details below: </p>
+        <div class="form-group">
+            <input class="form-control placeholder-no-fix" type="text" autocomplete="off" placeholder="Username" name="username" required/>
+        </div>
+        <div class="form-group">
+            <input class="form-control placeholder-no-fix" type="password" autocomplete="off" id="register_password" placeholder="Password" name="password" required/>
+        </div>
+        <div class="form-group">
+            <input class="form-control placeholder-no-fix" type="password" autocomplete="off" placeholder="Re-type Your Password" name="rpassword" required/>
+        </div>
+        {{!--<div class="form-group margin-top-20 margin-bottom-20">--}}
+            {{!--<label class="mt-checkbox mt-checkbox-outline">--}}
+                {{!--<input type="checkbox" name="tnc" /> I agree to the--}}
+                {{!--<a href="javascript:;">Terms of Service </a> &--}}
+                {{!--<a href="javascript:;">Privacy Policy </a>--}}
+                {{!--<span></span>--}}
+            {{!--</label>--}}
+            {{!--<div id="register_tnc_error"> </div>--}}
+        {{!--</div>--}}
+        <div class="form-actions">
+            <input type="hidden" name="_csrf" value="{{csrfToken}}">
+            <button type="button" id="register-back-btn" class="btn green btn-outline">Back</button>
+            <button type="submit" id="register-submit-btn" class="btn uppercase pull-right">Submit</button>
+        </div>
+    </form>
+</div>
+<script>
+    $("body").addClass("login");
+</script>

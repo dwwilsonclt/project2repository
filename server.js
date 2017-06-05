@@ -4,8 +4,16 @@
 // ******************************************************************************
 // *** Dependencies
 // =============================================================
-var express = require("express");
-var bodyParser = require("body-parser");
+var express        = require("express");
+var path           = require("path");
+var bodyParser     = require("body-parser");
+var cookieParser   = require("cookie-parser");
+var expressHbs     = require("express-handlebars");
+var session        = require("express-session");
+var passport       = require("passport");
+var flash          = require("connect-flash");
+var validator      = require("express-validator");
+var SequelizeStore = require("connect-session-sequelize")(session.Store);
 
 // Sets up the Express App
 // =============================================================
@@ -15,21 +23,57 @@ var PORT = process.env.PORT || 8080;
 // Requiring our models for syncing
 var db = require("./models");
 require("./associations")(db);
+require("./config/passport");
+
+var index = require("./routes/index");
+var api = require("./routes/api");
+
+var sessionStore = new SequelizeStore({
+    db: db.sequelize,
+    checkExpirationInterval: 15 * 60 * 1000,
+    expiration: 3 * 3600 * 1000
+});
+
+app.engine(".hbs", expressHbs({
+    defaultLayout: "layout",
+    extname: ".hbs"
+}));
+app.set("view engine", "hbs");
 
 // Sets up the Express app to handle data parsing
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
 app.use(bodyParser.text());
-app.use(bodyParser.json({ type: "application/vnd.api+json" }));
+app.use(bodyParser.json({
+    type: "application/vnd.api+json"
+}));
+app.use(validator());
+app.use(cookieParser());
+app.use(session({
+    secret: "mysecret",
+    resave: false,
+    saveUninitialized: false,
+    store: sessionStore
+}));
+app.use(flash());
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(express.static(path.join(__dirname, "public")));
 
-// Static directory
-app.use(express.static("./public"));
+sessionStore.sync();
+
+app.use(function(req, res, next) {
+    res.locals.login = req.isAuthenticated();
+    res.locals.session = req.session;
+    next();
+});
 
 // Routes ======================================================
+app.use("/api", api);
+app.use("/", index);
 
-require("./routes/html-routes.js")(app);
-require("./routes/post-api-routes.js")(app);
-require("./routes/author-api-routes.js")(app);
 
 // Syncing our sequelize models and then starting our express app
 db.sequelize.sync({ force: false }).then(function() {
