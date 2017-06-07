@@ -1,15 +1,5 @@
 module.exports = function(sequelize, DataTypes) {
     var Coursework = sequelize.define("coursework", {
-        coursework_id: {
-            type: DataTypes.INTEGER,
-            autoIncrement: true,
-            unique: true,
-            allowNull: false,
-            primaryKey: true,
-            validate: {
-                notEmpty: true
-            }
-        },
         name: {
             type: DataTypes.STRING(12),
             allowNull: false,
