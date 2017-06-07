@@ -1,16 +1,5 @@
 module.exports = function(sequelize, DataTypes) {
-    var Bookstore = sequelize.define("bookstore", {
-        bookstore_id: {
-            type: DataTypes.INTEGER,
-            autoIncrement: true,
-            unique: true,
-            allowNull: false,
-            primaryKey: true,
-            validate: {
-                notEmpty: true
-            }
-        },
-    });
+    var Bookstore = sequelize.define("bookstore", {});
 
     // Bookstore.sync({
     // 	force: true

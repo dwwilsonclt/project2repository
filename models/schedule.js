@@ -1,15 +1,5 @@
 module.exports = function(sequelize, DataTypes) {
     var Schedule = sequelize.define("schedule", {
-        schedule_id: {
-            type: DataTypes.INTEGER,
-            autoIncrement: true,
-            unique: true,
-            allowNull: false,
-            primaryKey: true,
-            validate: {
-                notEmpty: true
-            }
-        },
         days: {
             type: DataTypes.STRING(20),
             allowNull: false,

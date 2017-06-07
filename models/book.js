@@ -1,15 +1,5 @@
 module.exports = function(sequelize, DataTypes) {
     var Book = sequelize.define("book", {
-        book_id: {
-            type: DataTypes.INTEGER,
-            autoIncrement: true,
-            unique: true,
-            allowNull: false,
-            primaryKey: true,
-            validate: {
-                notEmpty: true
-            }
-        },
         title: {
             type: DataTypes.STRING(60),
             allowNull: false,
