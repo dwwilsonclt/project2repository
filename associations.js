@@ -5,6 +5,12 @@ module.exports = function(db) {
     db.Person.hasMany(db.Professor, {
         onDelete: "cascade"
     });
+    db.Person.hasMany(db.Admin, {
+        onDelete: "cascade"
+    });
+    db.Person.hasMany(db.BookstoreAdmin, {
+        onDelete: "cascade"
+    });
 
     db.School.hasMany(db.Building, {
         onDelete: "cascade"
