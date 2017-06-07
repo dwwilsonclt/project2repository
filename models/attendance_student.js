@@ -2,7 +2,6 @@ module.exports = function(sequelize, DataTypes) {
     var AttendanceStudent = sequelize.define("attendance_student", {
         class_id: {
             type: DataTypes.INTEGER,
-            autoIncrement: true,
             unique: true,
             allowNull: false,
             primaryKey: true,
@@ -12,7 +11,6 @@ module.exports = function(sequelize, DataTypes) {
         },
         student_id: {
             type: DataTypes.INTEGER,
-            autoIncrement: true,
             unique: true,
             allowNull: false,
             primaryKey: true,
