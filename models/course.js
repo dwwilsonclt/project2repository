@@ -1,16 +1,17 @@
 module.exports = function(sequelize, DataTypes) {
     var Course = sequelize.define("course", {
-        department_id: {
-            type: DataTypes.STRING(5),
+        id: {
+            type: DataTypes.INTEGER(5),
             unique: true,
+            autoIncrement: true,
             allowNull: false,
             primaryKey: true,
             validate: {
                 notEmpty: true
             }
         },
-        course_id: {
-            type: DataTypes.INTEGER(5),
+        department_id: {
+            type: DataTypes.STRING(5),
             unique: true,
             allowNull: false,
             primaryKey: true,

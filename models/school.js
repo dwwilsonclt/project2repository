@@ -1,15 +1,5 @@
 module.exports = function(sequelize, DataTypes) {
     var School = sequelize.define("school", {
-        school_id: {
-            type: DataTypes.INTEGER,
-            autoIncrement: true,
-            unique: true,
-            allowNull: false,
-            primaryKey: true,
-            validate: {
-                notEmpty: true
-            }
-        },
         name: {
             type: DataTypes.STRING(50),
             allowNull: false,

@@ -1,6 +1,6 @@
 module.exports = function(sequelize, DataTypes) {
     var Department = sequelize.define("department", {
-        department_id: {
+        id: {
             type: DataTypes.STRING(5),
             unique: true,
             allowNull: false,

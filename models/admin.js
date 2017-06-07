@@ -2,16 +2,6 @@ var bcrypt = require("bcrypt-nodejs");
 
 module.exports = function(sequelize, DataTypes) {
     var Admin = sequelize.define("admin", {
-        admin_id: {
-            type: DataTypes.INTEGER,
-            autoIncrement: true,
-            unique: true,
-            allowNull: false,
-            primaryKey: true,
-            validate: {
-                notEmpty: true
-            }
-        },
         email: {
             type: DataTypes.STRING(50),
             allowNull: false,
