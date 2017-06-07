@@ -3,7 +3,7 @@ var bcrypt = require("bcrypt-nodejs");
 module.exports = function(sequelize, DataTypes) {
     var Professor = sequelize.define("professor", {
         phone: {
-            type: DataTypes.CHAR(10),
+            type: DataTypes.CHAR(20),
             allowNull: false,
             validate: {
                 notEmpty: true
