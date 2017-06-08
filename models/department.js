@@ -10,7 +10,7 @@ module.exports = function(sequelize, DataTypes) {
             }
         },
         name: {
-            type: DataTypes.STRING(12),
+            type: DataTypes.STRING(20),
             allowNull: false,
             validate: {
                 notEmpty: true
