@@ -24,7 +24,7 @@ module.exports = function(sequelize, DataTypes) {
             }
         }
     });
-
+//DWW update
     // Course.sync({
     // 	force: true
     // });
