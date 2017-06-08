@@ -31,7 +31,7 @@ module.exports = function(sequelize, DataTypes) {
             }
         },
         phone: {
-            type: DataTypes.CHAR(10),
+            type: DataTypes.CHAR(20),
             allowNull: false,
             validate: {
                 notEmpty: true
