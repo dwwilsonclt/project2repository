@@ -63,15 +63,8 @@ module.exports = function(db) {
             allowNull: false
         }
     });
-    db.AcademicPeriod.hasMany(db.Schedule, {
-        onDelete: "cascade"
-    });
+    db.AcademicPeriod.hasMany(db.Class);
 
-    db.Schedule.belongsTo(db.AcademicPeriod, {
-        foreignKey: {
-            allowNull: false
-        }
-    });
     db.Schedule.hasMany(db.Class);
 
     db.Bookstore.belongsTo(db.School, {
@@ -166,7 +159,8 @@ module.exports = function(db) {
             allowNull: false
         }
     });
-    db.Class.belongsTo(db.Professor, {
+    db.Class.belongsTo(db.Professor);
+    db.Class.belongsTo(db.AcademicPeriod, {
         foreignKey: {
             allowNull: false
         }
@@ -181,11 +175,7 @@ module.exports = function(db) {
             allowNull: false
         }
     });
-    db.Class.belongsTo(db.Book, {
-        foreignKey: {
-            allowNull: false
-        }
-    });
+    db.Class.belongsTo(db.Book);
     db.Class.belongsToMany(db.Student, {
         through: db.ClassStudent
     });
