@@ -42,12 +42,8 @@ module.exports = function(db) {
             allowNull: false
         }
     });
-    db.Room.hasMany(db.Professor, {
-        onDelete: "cascade"
-    });
-    db.Room.hasMany(db.Class, {
-        onDelete: "cascade"
-    });
+    db.Room.hasMany(db.Professor);
+    db.Room.hasMany(db.Class);
 
     db.Department.belongsTo(db.School, {
         foreignKey: {
@@ -57,9 +53,7 @@ module.exports = function(db) {
     db.Department.hasMany(db.Course, {
         onDelete: "cascade"
     });
-    db.Department.hasMany(db.Professor, {
-        onDelete: "cascade"
-    });
+    db.Department.hasMany(db.Professor);
     db.Department.hasMany(db.Student, {
         onDelete: "cascade"
     });
@@ -78,9 +72,7 @@ module.exports = function(db) {
             allowNull: false
         }
     });
-    db.Schedule.hasMany(db.Class, {
-        onDelete: "cascade"
-    });
+    db.Schedule.hasMany(db.Class);
 
     db.Bookstore.belongsTo(db.School, {
         foreignKey: {
@@ -140,12 +132,8 @@ module.exports = function(db) {
             allowNull: false
         }
     });
-    db.Professor.hasMany(db.Class, {
-        onDelete: "cascade"
-    });
-    db.Professor.hasMany(db.Order, {
-        onDelete: "cascade"
-    });
+    db.Professor.hasMany(db.Class);
+    db.Professor.hasMany(db.Order);
 
     db.Student.belongsTo(db.Person, {
         foreignKey: {
@@ -166,9 +154,7 @@ module.exports = function(db) {
     db.Student.belongsToMany(db.Assignment, {
         through: db.AssignmentStudent
     });
-    db.Student.hasMany(db.Order, {
-        onDelete: "cascade"
-    });
+    db.Student.hasMany(db.Order);
 
     db.Class.belongsTo(db.Department, {
         foreignKey: {
@@ -209,9 +195,7 @@ module.exports = function(db) {
     db.Class.hasMany(db.Coursework, {
         onDelete: "cascade"
     });
-    db.Class.hasMany(db.BookRequest, {
-        onDelete: "cascade"
-    });
+    db.Class.hasMany(db.BookRequest);
 
     db.Coursework.belongsTo(db.Class, {
         foreignKey: {

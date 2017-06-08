@@ -2,27 +2,8 @@ var bcrypt = require("bcrypt-nodejs");
 
 module.exports = function(sequelize, DataTypes) {
     var Professor = sequelize.define("professor", {
-        professor_id: {
-            type: DataTypes.INTEGER,
-            autoIncrement: true,
-            unique: true,
-            allowNull: false,
-            primaryKey: true,
-            validate: {
-                notEmpty: true
-            }
-        },
-        area_code: {
-            type: DataTypes.CHAR(3),
-            unique: true,
-            allowNull: false,
-            validate: {
-                notEmpty: true,
-                isEmail: true
-            }
-        },
         phone: {
-            type: DataTypes.CHAR(7),
+            type: DataTypes.CHAR(20),
             allowNull: false,
             validate: {
                 notEmpty: true

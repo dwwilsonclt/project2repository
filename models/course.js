@@ -1,17 +1,15 @@
 module.exports = function(sequelize, DataTypes) {
     var Course = sequelize.define("course", {
-        department_id: {
+        id: {
             type: DataTypes.STRING(5),
-            unique: true,
             allowNull: false,
             primaryKey: true,
             validate: {
                 notEmpty: true
             }
         },
-        course_id: {
-            type: DataTypes.INTEGER(5),
-            unique: true,
+        department_id: {
+            type: DataTypes.STRING(5),
             allowNull: false,
             primaryKey: true,
             validate: {
@@ -26,7 +24,7 @@ module.exports = function(sequelize, DataTypes) {
             }
         }
     });
-
+//DWW update
     // Course.sync({
     // 	force: true
     // });
