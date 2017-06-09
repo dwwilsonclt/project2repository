@@ -20,11 +20,19 @@ module.exports = function(sequelize, DataTypes) {
             validate: {
                 notEmpty: true
             }
+        },
+
+        year: {
+            type: DataTypes.STRING(4),
+            allowNull: false,
+            validate: {
+                notEmpty: true
+            }
         }
     });
 
     // AcademicPeriod.sync({
-    // 	force: true
+    //  force: true
     // });
 
     return AcademicPeriod;
