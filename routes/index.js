@@ -12,9 +12,9 @@ router.get("/", function(req, res, next) {
     });
 });
 
-router.get("/profile", isLoggedIn, function(req, res, next) {
-    res.render("user/profile");
-});
+// router.get("/profile", isLoggedIn, function(req, res, next) {
+//     res.render("user/profile");
+// });
 
 router.get("/logout", isLoggedIn, function(req, res, next) {
     req.logout();
@@ -52,10 +52,14 @@ router.get("/signin", function(req, res, next) {
 });
 
 router.post("/signin", passport.authenticate("local.signin", {
-    successRedirect: "/profile",
+    // successRedirect: "/profile",
     failureRedirect: "/signin",
     failureFlash: true
-}));
+}), function(req, res, next) {
+    res.render("user/profile", {
+        userType: req.body.userType
+    });
+});
 
 router.get("/forgot-password", function(req, res, next) {
     var messages = req.flash("error");
