@@ -2,7 +2,7 @@ var express = require("express");
 var router = express.Router();
 var csrf = require("csurf");
 var passport = require("passport");
-var userType = "";
+var db = require("../models");
 
 var csrfProtection = csrf();
 router.use(csrfProtection);
@@ -13,15 +13,27 @@ router.get("/", function(req, res, next) {
     });
 });
 
-router.get("/profile/:usertype", isLoggedIn, function(req, res, next) {
-    if (userType.toLowerCase() === req.params.usertype.toLowerCase()) {
-        res.render("user/profile", {
-            userType: req.params.usertype
-        });
-    }
+router.get("/profile", isLoggedIn, function(req, res, next) {
+    var userType = req.session.passport.userType;
+    db[userType].findOne({
+        where: {
+            email: req.session.passport.user
+        }
+    })
+    .then(function(user) {
+        if (user) {
+            res.render("user/profile", {
+                userType: userType
+            });
+        }
+    })
+    .catch(function (error) {
+        console.log(error);
+    });
 });
 
 router.get("/logout", isLoggedIn, function(req, res, next) {
+    req.session.passport.userType = null;
     req.logout();
     res.redirect("/");
 });
@@ -57,12 +69,10 @@ router.get("/signin", function(req, res, next) {
 });
 
 router.post("/signin", passport.authenticate("local.signin", {
+    successRedirect: "/profile",
     failureRedirect: "/signin",
     failureFlash: true
-}), function(req, res, next) {
-    userType = req.body.userType;
-    res.redirect("/profile/" + req.body.userType);
-});
+}));
 
 router.get("/forgot-password", function(req, res, next) {
     var messages = req.flash("error");

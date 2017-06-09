@@ -1,16 +1,47 @@
 var passport = require("passport");
 var LocalStrategy = require("passport-local").Strategy;
 var db = require("../models");
-var userType = "";
 
 passport.serializeUser(function(user, done) {
-	done(null, user.id);
+	done(null, user.email);
 });
 
-passport.deserializeUser(function(id, done) {
-	db[userType].findById(id)
-	.then(function(user){
-		done(null, user);
+passport.deserializeUser(function(email, done) {
+	db.Admin.findOne({
+		where: {
+			email: email
+		}
+	})
+	.then(function(admin){
+		if (!admin) {
+            db.Professor.findOne({
+                where: {
+                    email: email
+                }
+            })
+			.then(function(professor){
+				if (!professor) {
+					db.Student.findOne({
+						where: {
+							email: email
+						}
+					})
+					.then(function(student){
+  						done(null, student);
+					})
+					.catch(function(error){
+  						done(error, null);
+					});
+				} else {
+                    done(null, professor);
+				}
+			})
+			.catch(function(error){
+				done(error, null);
+			});
+		} else {
+            done(null, admin);
+		}
 	})
 	.catch(function(error){
 		done(error, null);
@@ -94,7 +125,7 @@ passport.use("local.signin", new LocalStrategy({
 	passwordField: "userPassword",
 	passReqToCallback: true
 }, function(req, email, password, done) {
-	userType = req.body.userType;
+    req.session.passport.userType = req.body.userType;
 	req.checkBody("email", "Invalid email")
 	.notEmpty()
 	.isEmail();
@@ -108,7 +139,7 @@ passport.use("local.signin", new LocalStrategy({
 		});
 		return done(null, false, req.flash("error", messages));
 	}
-	db[userType].findOne({
+	db[req.body.userType].findOne({
 		where: {
             email: email
 		}
