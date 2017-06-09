@@ -12,10 +12,6 @@ router.get("/", function(req, res, next) {
     });
 });
 
-// router.get("/profile", isLoggedIn, function(req, res, next) {
-//     res.render("user/profile");
-// });
-
 router.get("/logout", isLoggedIn, function(req, res, next) {
     req.logout();
     res.redirect("/");
@@ -52,7 +48,6 @@ router.get("/signin", function(req, res, next) {
 });
 
 router.post("/signin", passport.authenticate("local.signin", {
-    // successRedirect: "/profile",
     failureRedirect: "/signin",
     failureFlash: true
 }), function(req, res, next) {
