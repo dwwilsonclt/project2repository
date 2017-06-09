@@ -1,7 +1,7 @@
 module.exports = function(sequelize, DataTypes) {
     var Class = sequelize.define("class", {
         section: {
-            type: DataTypes.INTEGER(4),
+            type: DataTypes.CHAR(5),
             allowNull: false,
             validate: {
                 notEmpty: true

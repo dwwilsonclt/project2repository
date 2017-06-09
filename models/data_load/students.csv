@@ -1,0 +1,101 @@
+id,email,password,date_enrolled,class_level,created_at,updated_at,person_id,department_id
+1,rbrackenbury0@eagleu.edu,354 Redwing Crossing,2/23/2015,SOPHOMORE,9/12/2016 9:46,11/21/2016 12:22,1,ARCH
+2,fscurry1@eagleu.edu,5 Cottonwood Pass,11/14/2016,SOPHOMORE,8/16/2016 11:40,7/28/2016 4:09,2,ENGR
+3,gnardoni2@eagleu.edu,68 Crest Line Lane,9/10/2016,SOPHOMORE,5/25/2017 14:45,10/12/2016 13:25,3,FINN
+4,jvanarsdall3@eagleu.edu,4904 Clarendon Way,6/8/2014,JUNIOR,9/16/2016 18:05,2/18/2017 1:17,4,HIST
+5,llarn4@eagleu.edu,92 Sunbrook Center,3/20/2014,JUNIOR,5/2/2017 19:28,4/8/2017 10:40,5,ITCS
+6,gpurdon5@eagleu.edu,6 Novick Parkway,11/7/2013,SENIOR,10/27/2016 17:19,5/22/2017 4:02,6,LBST
+7,efealy6@eagleu.edu,810 Summer Ridge Terrace,5/9/2014,JUNIOR,12/4/2016 15:38,7/11/2016 22:41,7,MATH
+8,tschafer7@eagleu.edu,9 Birchwood Drive,11/7/2016,SOPHOMORE,2/12/2017 17:50,4/2/2017 21:59,8,PHYS
+9,smcdade8@eagleu.edu,9 Del Sol Center,2/4/2015,SOPHOMORE,3/28/2017 10:02,1/17/2017 22:36,9,ARCH
+10,wteacy9@eagleu.edu,765 Corscot Lane,9/6/2016,SOPHOMORE,11/29/2016 4:21,4/23/2017 15:32,10,ENGR
+11,rdoeya@eagleu.edu,13 Dwight Drive,11/9/2013,SENIOR,9/26/2016 2:16,11/10/2016 6:06,11,FINN
+12,cpealb@eagleu.edu,722 Blaine Hill,11/14/2016,SOPHOMORE,7/12/2016 19:05,12/14/2016 11:25,12,HIST
+13,ekermitc@eagleu.edu,0809 Delladonna Parkway,3/18/2016,SOPHOMORE,3/14/2017 10:57,1/30/2017 21:48,13,ITCS
+14,fdurringtond@eagleu.edu,8 Utah Drive,12/11/2015,SOPHOMORE,5/6/2017 5:41,10/22/2016 14:22,14,LBST
+15,lpriddye@eagleu.edu,6234 Claremont Trail,2/3/2014,JUNIOR,4/18/2017 22:33,1/7/2017 18:55,15,MATH
+16,rgoskerf@eagleu.edu,8 Hansons Junction,1/14/2017,FRESHMAN,3/25/2017 5:29,5/4/2017 7:56,16,PHYS
+17,rvellenderg@eagleu.edu,72 Stone Corner Court,10/29/2012,SENIOR,6/18/2016 7:56,1/30/2017 15:32,17,ARCH
+18,iskelhorneh@eagleu.edu,69 Waywood Alley,5/31/2015,SOPHOMORE,12/8/2016 12:27,10/29/2016 1:21,18,ENGR
+19,hloriei@eagleu.edu,6917 Erie Center,2/17/2013,SENIOR,8/16/2016 18:21,1/30/2017 8:31,19,FINN
+20,jroglieroj@eagleu.edu,3974 Elgar Way,6/29/2016,SOPHOMORE,8/9/2016 14:27,5/19/2017 8:09,20,HIST
+21,msarathk@eagleu.edu,7905 Roth Point,1/26/2013,SENIOR,12/5/2016 8:37,1/2/2017 13:20,21,ITCS
+22,pswangerl@eagleu.edu,742 Prentice Alley,7/10/2014,JUNIOR,5/22/2017 1:57,5/15/2017 13:09,22,LBST
+23,ogiggm@eagleu.edu,34 Valley Edge Alley,3/4/2015,SOPHOMORE,2/18/2017 21:14,12/28/2016 13:22,23,MATH
+24,bpowelln@eagleu.edu,4652 Lukken Point,5/28/2017,FRESHMAN,4/4/2017 6:26,12/25/2016 11:05,24,PHYS
+25,amarkso@eagleu.edu,4163 Heath Trail,5/12/2015,SOPHOMORE,11/21/2016 4:36,2/24/2017 0:43,25,ARCH
+26,dmolineuxp@eagleu.edu,0 Rieder Pass,2/24/2014,JUNIOR,1/17/2017 19:56,2/25/2017 2:43,26,ENGR
+27,rcowieq@eagleu.edu,1 Coolidge Place,7/30/2016,SOPHOMORE,8/7/2016 20:27,1/18/2017 17:03,27,FINN
+28,elesterr@eagleu.edu,664 Barnett Plaza,10/21/2012,SENIOR,2/27/2017 1:30,1/4/2017 3:35,28,HIST
+29,nshellidays@eagleu.edu,2335 Carberry Pass,9/9/2012,SENIOR,12/9/2016 10:37,5/20/2017 6:57,29,ITCS
+30,fsprottt@eagleu.edu,4 Hooker Parkway,8/25/2016,SOPHOMORE,10/19/2016 15:23,9/15/2016 19:19,30,LBST
+31,hheinsiusu@eagleu.edu,069 Duke Point,3/8/2013,SENIOR,5/28/2017 3:39,12/1/2016 18:43,31,MATH
+32,cfelipev@eagleu.edu,21429 Kingsford Plaza,11/2/2013,SENIOR,2/24/2017 3:09,3/3/2017 14:05,32,PHYS
+33,fkubasw@eagleu.edu,4174 Delladonna Lane,2/16/2016,SOPHOMORE,10/19/2016 7:39,6/28/2016 9:01,33,ARCH
+34,gtaborrex@eagleu.edu,2 American Way,3/19/2013,SENIOR,4/2/2017 10:16,12/10/2016 0:42,34,ENGR
+35,ggrosvenery@eagleu.edu,5999 Park Meadow Parkway,2/14/2013,SENIOR,9/20/2016 23:41,12/23/2016 12:43,35,FINN
+36,agriffithz@eagleu.edu,320 Fair Oaks Road,6/10/2015,SOPHOMORE,10/5/2016 18:53,2/7/2017 23:11,36,HIST
+37,bclissold10@eagleu.edu,6399 Kennedy Avenue,5/11/2015,SOPHOMORE,7/11/2016 23:41,3/5/2017 0:08,37,ITCS
+38,wsilversmid11@eagleu.edu,8 Village Pass,12/13/2014,JUNIOR,12/26/2016 16:22,5/25/2017 0:27,38,LBST
+39,lcortes12@eagleu.edu,480 Jackson Crossing,8/19/2013,SENIOR,12/6/2016 13:07,10/16/2016 5:47,39,MATH
+40,mcrippes13@eagleu.edu,634 Browning Circle,7/26/2016,SOPHOMORE,3/10/2017 15:16,9/14/2016 8:37,40,PHYS
+41,emacvey14@eagleu.edu,872 Spaight Parkway,1/13/2013,SENIOR,1/1/2017 18:42,5/27/2017 6:39,41,ARCH
+42,adenisyuk15@eagleu.edu,6 Graedel Parkway,12/22/2016,SOPHOMORE,1/26/2017 10:34,1/24/2017 7:21,42,ENGR
+43,jbalcers16@eagleu.edu,0414 Red Cloud Point,12/23/2016,SOPHOMORE,8/17/2016 13:21,8/20/2016 2:39,43,FINN
+44,khulburt17@eagleu.edu,61515 Warbler Road,2/27/2017,FRESHMAN,8/3/2016 17:12,1/25/2017 15:03,44,HIST
+45,wrowler18@eagleu.edu,905 Nancy Trail,9/25/2015,SOPHOMORE,5/14/2017 7:03,7/5/2016 9:41,45,ITCS
+46,rcockerell19@eagleu.edu,9730 Norway Maple Point,3/8/2013,SENIOR,9/20/2016 3:13,4/16/2017 20:21,46,LBST
+47,rmyderscough1a@eagleu.edu,6965 Havey Alley,8/16/2014,JUNIOR,1/1/2017 0:01,10/31/2016 17:53,47,MATH
+48,lmullins1b@eagleu.edu,3 Mayfield Point,8/2/2016,SOPHOMORE,9/7/2016 23:02,5/18/2017 16:34,48,PHYS
+49,dcroser1c@eagleu.edu,39404 Sunnyside Street,9/27/2015,SOPHOMORE,11/2/2016 22:01,8/21/2016 15:22,49,ARCH
+50,wmacgaughey1d@eagleu.edu,234 Jackson Hill,5/12/2013,SENIOR,11/30/2016 21:26,12/25/2016 20:54,50,ENGR
+51,ktomczykiewicz1e@eagleu.edu,949 Rusk Plaza,2/12/2014,JUNIOR,12/20/2016 2:43,11/8/2016 19:16,51,FINN
+52,zshepstone1f@eagleu.edu,2459 Florence Place,1/16/2017,FRESHMAN,12/11/2016 8:57,10/13/2016 17:34,52,HIST
+53,btrussell1g@eagleu.edu,7 Hayes Hill,2/24/2014,JUNIOR,10/27/2016 16:31,7/8/2016 3:41,53,ITCS
+54,tbridgland1h@eagleu.edu,60 Lillian Drive,9/17/2015,SOPHOMORE,8/27/2016 16:45,12/2/2016 18:32,54,LBST
+55,famber1i@eagleu.edu,942 Nobel Alley,8/28/2013,SENIOR,9/17/2016 0:09,9/28/2016 17:36,55,MATH
+56,vnijs1j@eagleu.edu,5 Burrows Street,9/26/2013,SENIOR,10/25/2016 3:08,8/2/2016 18:16,56,PHYS
+57,ebennitt1k@eagleu.edu,5 Cody Terrace,8/14/2013,SENIOR,12/2/2016 7:22,10/19/2016 0:47,57,ARCH
+58,rgehricke1l@eagleu.edu,59 Karstens Hill,1/28/2016,SOPHOMORE,6/14/2016 11:40,11/2/2016 8:53,58,ENGR
+59,cstyle1m@eagleu.edu,6387 Sunbrook Court,9/9/2016,SOPHOMORE,12/22/2016 20:43,9/22/2016 21:51,59,FINN
+60,schidler1n@eagleu.edu,52230 Glendale Court,4/5/2015,SOPHOMORE,11/30/2016 2:41,4/13/2017 18:54,60,HIST
+61,mosharry1o@eagleu.edu,1 Sunbrook Court,11/8/2015,SOPHOMORE,7/20/2016 19:20,6/19/2016 13:19,61,ITCS
+62,tminchin1p@eagleu.edu,90 Prairieview Junction,9/22/2013,SENIOR,5/19/2017 23:33,8/2/2016 5:26,62,LBST
+63,ypole1q@eagleu.edu,9530 Transport Hill,1/26/2014,JUNIOR,10/17/2016 3:33,11/24/2016 5:51,63,MATH
+64,glauridsen1r@eagleu.edu,8652 La Follette Parkway,9/27/2013,SENIOR,4/28/2017 16:14,12/9/2016 21:01,64,PHYS
+65,dgledhall1s@eagleu.edu,624 Debra Court,11/15/2016,SOPHOMORE,4/15/2017 22:15,6/5/2017 3:41,65,ARCH
+66,kbowen1t@eagleu.edu,45522 Barby Court,11/13/2013,SENIOR,2/28/2017 10:29,2/8/2017 10:38,66,ENGR
+67,lbeirne1u@eagleu.edu,63 Burrows Terrace,2/20/2013,SENIOR,6/13/2016 6:02,7/31/2016 12:03,67,FINN
+68,bkrzysztof1v@eagleu.edu,9832 Pleasure Road,7/12/2016,SOPHOMORE,11/17/2016 16:12,3/19/2017 8:44,68,HIST
+69,aaizikovitch1w@eagleu.edu,3229 Lerdahl Center,9/10/2012,SENIOR,11/3/2016 23:05,7/2/2016 9:12,69,ITCS
+70,kspenton1x@eagleu.edu,38 Havey Point,3/20/2013,SENIOR,11/12/2016 14:33,7/22/2016 8:31,70,LBST
+71,lstutard1y@eagleu.edu,1 Park Meadow Drive,2/16/2013,SENIOR,7/7/2016 23:04,9/25/2016 2:13,71,MATH
+72,atrevon1z@eagleu.edu,5 Norway Maple Terrace,7/18/2015,SOPHOMORE,5/15/2017 15:45,11/18/2016 2:13,72,PHYS
+73,mkleinmann20@eagleu.edu,629 Elka Place,5/23/2015,SOPHOMORE,5/7/2017 18:41,11/20/2016 7:52,73,ARCH
+74,rgrigoliis21@eagleu.edu,34 Red Cloud Pass,6/19/2013,SENIOR,2/16/2017 1:50,6/17/2016 16:36,74,ENGR
+75,gpyer22@eagleu.edu,81458 Dakota Way,9/5/2014,JUNIOR,5/12/2017 21:29,7/11/2016 10:56,75,FINN
+76,gpickerill23@eagleu.edu,4 Garrison Circle,6/2/2016,SOPHOMORE,3/25/2017 3:05,11/14/2016 23:36,76,HIST
+77,abourton24@eagleu.edu,5 Hauk Trail,2/8/2016,SOPHOMORE,12/5/2016 10:12,1/7/2017 10:01,77,ITCS
+78,mblackden25@eagleu.edu,546 Loomis Circle,8/23/2016,SOPHOMORE,2/19/2017 19:13,9/27/2016 9:00,78,LBST
+79,corum26@eagleu.edu,1 Cottonwood Park,11/13/2012,SENIOR,5/6/2017 4:07,7/3/2016 13:59,79,MATH
+80,dstrand27@eagleu.edu,6106 Killdeer Lane,8/23/2014,JUNIOR,4/20/2017 9:35,3/2/2017 9:42,80,PHYS
+81,rwherrett28@eagleu.edu,1200 Bobwhite Pass,10/8/2016,SOPHOMORE,11/13/2016 20:53,2/6/2017 16:55,81,ARCH
+82,jedward29@eagleu.edu,578 Basil Park,4/13/2016,SOPHOMORE,5/23/2017 19:43,8/16/2016 20:23,82,ENGR
+83,zantoinet2a@eagleu.edu,6 Havey Street,6/12/2015,SOPHOMORE,7/27/2016 11:10,7/6/2016 7:31,83,FINN
+84,lcandie2b@eagleu.edu,46 Menomonie Crossing,6/8/2016,SOPHOMORE,1/2/2017 15:19,3/9/2017 18:25,84,HIST
+85,kkainz2c@eagleu.edu,147 Ohio Junction,6/6/2017,FRESHMAN,6/2/2017 10:22,11/17/2016 5:27,85,ITCS
+86,dwhite2d@eagleu.edu,97 Monument Alley,12/19/2015,SOPHOMORE,11/6/2016 4:02,3/21/2017 12:05,86,LBST
+87,vpierri2e@eagleu.edu,4862 Coolidge Pass,9/4/2014,JUNIOR,1/10/2017 7:39,10/2/2016 6:33,87,MATH
+88,ilampart2f@eagleu.edu,77768 Melrose Parkway,1/16/2016,SOPHOMORE,5/26/2017 7:53,10/1/2016 0:51,88,PHYS
+89,rgoodrich2g@eagleu.edu,56 Heffernan Crossing,2/20/2017,FRESHMAN,11/6/2016 8:26,5/17/2017 6:17,89,ARCH
+90,cdahlbom2h@eagleu.edu,1809 Kedzie Lane,3/10/2013,SENIOR,1/8/2017 3:58,6/11/2016 15:01,90,ENGR
+91,dmeigh2i@eagleu.edu,9230 Cordelia Park,10/2/2012,SENIOR,3/18/2017 2:35,11/16/2016 3:46,91,FINN
+92,mbenner2j@eagleu.edu,0 Thackeray Pass,2/7/2015,SOPHOMORE,2/24/2017 10:04,3/24/2017 3:41,92,HIST
+93,ytunsley2k@eagleu.edu,79160 Declaration Lane,5/21/2013,SENIOR,8/11/2016 11:55,8/14/2016 16:55,93,ITCS
+94,fleverentz2l@eagleu.edu,84 Golf View Circle,11/19/2015,SOPHOMORE,11/30/2016 10:38,8/23/2016 17:02,94,LBST
+95,fmcgrath2m@eagleu.edu,226 Amoth Hill,5/15/2015,SOPHOMORE,8/24/2016 12:05,5/15/2017 7:50,95,MATH
+96,adimitrie2n@eagleu.edu,0 Nova Park,7/8/2014,JUNIOR,2/20/2017 12:33,5/6/2017 16:24,96,PHYS
+97,lfindon2o@eagleu.edu,06560 Carberry Terrace,11/5/2013,SENIOR,4/7/2017 0:00,5/1/2017 23:21,97,ARCH
+98,sruffey2p@eagleu.edu,232 Merry Circle,1/10/2016,SOPHOMORE,4/11/2017 3:42,7/29/2016 19:37,98,ENGR
+99,gstoaks2q@eagleu.edu,94718 Susan Circle,11/5/2015,SOPHOMORE,10/13/2016 13:52,5/23/2017 22:35,99,FINN
+100,siwanowski2r@eagleu.edu,38271 Bay Alley,1/26/2014,JUNIOR,6/29/2016 15:45,2/18/2017 21:51,100,HIST

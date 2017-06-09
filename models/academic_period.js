@@ -1,21 +1,29 @@
 module.exports = function(sequelize, DataTypes) {
     var AcademicPeriod = sequelize.define("academic_period", {
         name: {
-            type: DataTypes.STRING(12),
+            type: DataTypes.STRING(20),
             allowNull: false,
             validate: {
                 notEmpty: true
             }
         },
         begin_date: {
-            type: DataTypes.DATE,
+            type: DataTypes.DATEONLY,
             allowNull: false,
             validate: {
                 notEmpty: true
             }
         },
         end_date: {
-            type: DataTypes.DATE,
+            type: DataTypes.DATEONLY,
+            allowNull: false,
+            validate: {
+                notEmpty: true
+            }
+        },
+
+        year: {
+            type: DataTypes.STRING(4),
             allowNull: false,
             validate: {
                 notEmpty: true
@@ -24,7 +32,7 @@ module.exports = function(sequelize, DataTypes) {
     });
 
     // AcademicPeriod.sync({
-    // 	force: true
+    //  force: true
     // });
 
     return AcademicPeriod;
