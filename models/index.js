@@ -29,7 +29,6 @@ if (config.use_env_variable) {
 //     db[modelName].associate(db);
 //   }
 // });
-db.User           = require("./user")(sequelize, Sequelize);
 db.AcademicPeriod = require("./academic_period")(sequelize, Sequelize);
 db.Admin          = require("./admin")(sequelize, Sequelize);
 db.Assignment     = require("./assignment")(sequelize, Sequelize);
