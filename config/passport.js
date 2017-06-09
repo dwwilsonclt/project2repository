@@ -1,16 +1,18 @@
 var passport = require("passport");
 var LocalStrategy = require("passport-local").Strategy;
 var db = require("../models");
+var userType = "";
 
 passport.serializeUser(function(user, done) {
 	done(null, user.id);
 });
 
 passport.deserializeUser(function(id, done) {
-	db.User.findById(id)
+	db[userType].findById(id)
 	.then(function(user){
 		done(null, user);
-	}).catch(function(error){
+	})
+	.catch(function(error){
 		done(error, null);
 	});
 });
@@ -88,13 +90,15 @@ passport.use('local.signup', new LocalStrategy({
 }));
 
 passport.use("local.signin", new LocalStrategy({
-	usernameField: "username",
-	passwordField: "password",
+	usernameField: "email",
+	passwordField: "userPassword",
 	passReqToCallback: true
-}, function(req, username, password, done) {
-	req.checkBody("username", "Invalid username")
-	.notEmpty();
-	req.checkBody("password", "Invalid password")
+}, function(req, email, password, done) {
+	userType = req.body.userType;
+	req.checkBody("email", "Invalid email")
+	.notEmpty()
+	.isEmail();
+	req.checkBody("userPassword", "Invalid password")
 	.notEmpty();
 	var errors = req.validationErrors();
 	if (errors) {
@@ -104,19 +108,18 @@ passport.use("local.signin", new LocalStrategy({
 		});
 		return done(null, false, req.flash("error", messages));
 	}
-	db.User.findOne({
+	db[userType].findOne({
 		where: {
-			username: username
+            email: email
 		}
 	})
 	.then(function(user){
 		if (!user) {
 			return done(null, false, {
-				message: "User not found"
+				message: req.body.userType + " not found"
 			});
 		}
-		var passwd = user.password;
-		db.User.validPassword(password, passwd, function(isMatch) {
+		db.Person.validPassword(password, user.password, function(isMatch) {
             if (isMatch) {
                 return done(null, user);
             } else {
