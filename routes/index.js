@@ -14,7 +14,7 @@ router.get("/", function(req, res, next) {
 });
 
 router.get("/profile", isLoggedIn, function(req, res, next) {
-    var userType = req.session.passport.userType;
+    var userType = req.session.userType;
     db[userType].findOne({
         where: {
             email: req.session.passport.user
@@ -33,7 +33,7 @@ router.get("/profile", isLoggedIn, function(req, res, next) {
 });
 
 router.get("/logout", isLoggedIn, function(req, res, next) {
-    req.session.passport.userType = null;
+    req.session.userType = null;
     req.logout();
     res.redirect("/");
 });

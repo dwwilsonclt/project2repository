@@ -125,7 +125,7 @@ passport.use("local.signin", new LocalStrategy({
 	passwordField: "userPassword",
 	passReqToCallback: true
 }, function(req, email, password, done) {
-    req.session.passport.userType = req.body.userType;
+    req.session.userType = req.body.userType;
 	req.checkBody("email", "Invalid email")
 	.notEmpty()
 	.isEmail();
