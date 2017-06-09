@@ -2,6 +2,7 @@ var express = require("express");
 var router = express.Router();
 var csrf = require("csurf");
 var passport = require("passport");
+var userType = "";
 
 var csrfProtection = csrf();
 router.use(csrfProtection);
@@ -10,6 +11,14 @@ router.get("/", function(req, res, next) {
     res.render("index", {
         title: "Project 2"
     });
+});
+
+router.get("/profile/:usertype", isLoggedIn, function(req, res, next) {
+    if (userType.toLowerCase() === req.params.usertype.toLowerCase()) {
+        res.render("user/profile", {
+            userType: req.params.usertype
+        });
+    }
 });
 
 router.get("/logout", isLoggedIn, function(req, res, next) {
@@ -51,9 +60,8 @@ router.post("/signin", passport.authenticate("local.signin", {
     failureRedirect: "/signin",
     failureFlash: true
 }), function(req, res, next) {
-    res.render("user/profile", {
-        userType: req.body.userType
-    });
+    userType = req.body.userType;
+    res.redirect("/profile/" + req.body.userType);
 });
 
 router.get("/forgot-password", function(req, res, next) {
