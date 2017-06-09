@@ -141,19 +141,19 @@ module.exports = function(db) {
     db.Student.belongsToMany(db.Class, {
         through: db.ClassStudent
     });
-    db.Student.belongsToMany(db.Class, {
-        through: db.AttendanceStudent
-    });
+    // db.Student.belongsToMany(db.Class, {
+    //     through: db.AttendanceStudent
+    // });
     db.Student.belongsToMany(db.Assignment, {
         through: db.AssignmentStudent
     });
     db.Student.hasMany(db.Order);
 
-    db.Class.belongsTo(db.Department, {
-        foreignKey: {
-            allowNull: false
-        }
-    });
+    // db.Class.belongsTo(db.Department, {
+    //     foreignKey: {
+    //         allowNull: false
+    //     }
+    // });
     db.Class.belongsTo(db.Course, {
         foreignKey: {
             allowNull: false
@@ -179,9 +179,9 @@ module.exports = function(db) {
     db.Class.belongsToMany(db.Student, {
         through: db.ClassStudent
     });
-    db.Class.belongsToMany(db.Student, {
-        through: db.AttendanceStudent
-    });
+    // db.Class.belongsToMany(db.Student, {
+    //     through: db.AttendanceStudent
+    // });
     db.Class.hasMany(db.Coursework, {
         onDelete: "cascade"
     });
