@@ -3,14 +3,47 @@ var LocalStrategy = require("passport-local").Strategy;
 var db = require("../models");
 
 passport.serializeUser(function(user, done) {
-	done(null, user.id);
+	done(null, user.email);
 });
 
-passport.deserializeUser(function(id, done) {
-	db.User.findById(id)
-	.then(function(user){
-		done(null, user);
-	}).catch(function(error){
+passport.deserializeUser(function(email, done) {
+	db.Admin.findOne({
+		where: {
+			email: email
+		}
+	})
+	.then(function(admin){
+		if (!admin) {
+            db.Professor.findOne({
+                where: {
+                    email: email
+                }
+            })
+			.then(function(professor){
+				if (!professor) {
+					db.Student.findOne({
+						where: {
+							email: email
+						}
+					})
+					.then(function(student){
+  						done(null, student);
+					})
+					.catch(function(error){
+  						done(error, null);
+					});
+				} else {
+                    done(null, professor);
+				}
+			})
+			.catch(function(error){
+				done(error, null);
+			});
+		} else {
+            done(null, admin);
+		}
+	})
+	.catch(function(error){
 		done(error, null);
 	});
 });
@@ -88,13 +121,15 @@ passport.use('local.signup', new LocalStrategy({
 }));
 
 passport.use("local.signin", new LocalStrategy({
-	usernameField: "username",
-	passwordField: "password",
+	usernameField: "email",
+	passwordField: "userPassword",
 	passReqToCallback: true
-}, function(req, username, password, done) {
-	req.checkBody("username", "Invalid username")
-	.notEmpty();
-	req.checkBody("password", "Invalid password")
+}, function(req, email, password, done) {
+    req.session.userType = req.body.userType;
+	req.checkBody("email", "Invalid email")
+	.notEmpty()
+	.isEmail();
+	req.checkBody("userPassword", "Invalid password")
 	.notEmpty();
 	var errors = req.validationErrors();
 	if (errors) {
@@ -104,19 +139,18 @@ passport.use("local.signin", new LocalStrategy({
 		});
 		return done(null, false, req.flash("error", messages));
 	}
-	db.User.findOne({
+	db[req.body.userType].findOne({
 		where: {
-			username: username
+            email: email
 		}
 	})
 	.then(function(user){
 		if (!user) {
 			return done(null, false, {
-				message: "User not found"
+				message: req.body.userType + " not found"
 			});
 		}
-		var passwd = user.password;
-		db.User.validPassword(password, passwd, function(isMatch) {
+		db.Person.validPassword(password, user.password, function(isMatch) {
             if (isMatch) {
                 return done(null, user);
             } else {

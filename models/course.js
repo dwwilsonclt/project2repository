@@ -1,9 +1,8 @@
 module.exports = function(sequelize, DataTypes) {
     var Course = sequelize.define("course", {
-        id: {
+        course_number: {
             type: DataTypes.STRING(5),
             allowNull: false,
-            primaryKey: true,
             validate: {
                 notEmpty: true
             }
@@ -11,7 +10,6 @@ module.exports = function(sequelize, DataTypes) {
         department_id: {
             type: DataTypes.STRING(5),
             allowNull: false,
-            primaryKey: true,
             validate: {
                 notEmpty: true
             }
