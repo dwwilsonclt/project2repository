@@ -19,6 +19,9 @@ router.get("/", isLoggedIn, function (req, res, next) {
     .then(function(professors) {
         res.json(professors);
     })
+    .catch(function(error) {
+        console.log(error);
+    })
 });
 
 router.get("/:professor", isLoggedIn, function (req, res, next) {
@@ -54,6 +57,9 @@ router.get("/:professor", isLoggedIn, function (req, res, next) {
     })
     .then(function(professor) {
         res.json(professor);
+    })
+    .catch(function(error) {
+        console.log(error);
     })
 });
 
@@ -115,13 +121,6 @@ router.get("/:professor/:class", isLoggedIn, function (req, res, next) {
 
 function isLoggedIn(req, res, next) {
     if (req.isAuthenticated()) {
-        return next();
-    }
-    res.redirect("/");
-}
-
-function notLoggedIn(req, res, next) {
-    if (!req.isAuthenticated()) {
         return next();
     }
     res.redirect("/");
