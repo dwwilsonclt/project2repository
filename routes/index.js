@@ -34,22 +34,22 @@ router.get("/profile/info", function(req, res, next) {
 });
 
 // return all person records
-router.get("/everyone", function(req, res, next) { 
-    db.Person.findAll({
+router.get("/depts", function(req, res, next) { 
+    var navPath = req.session.userType.toLowerCase()+"/nav";
+    console.log(navPath);
+    db.Department.findAll({
         })
-        .then(function(everyone) {
+        .then(function(depts) {
             var hbsObject = {
-                users: everyone
+                departments: depts,
+                navPath: navPath
             };
-            res.render("index", hbsObject);
-            // res.json(everyone);
-            // // console.log(everyone);
+            res.render("partials/admin/departments", hbsObject);
         })
-        .catch(function(error) {
+        .catch(function(error) {userType
             console.log(error);
         });
 });
-
 
 router.get("/profile", isLoggedIn, function(req, res, next) {
     var userType = req.session.userType;
@@ -60,7 +60,13 @@ router.get("/profile", isLoggedIn, function(req, res, next) {
         })
         .then(function(user) {
             if (user) {
+                var admin = userType === "Admin" ? true : false;
+                var professor = userType === "Professor" ? true : false;
+                var student = userType === "Student" ? true : false;
                 res.render("user/profile", {
+                    admin: admin,
+                    professor: professor,
+                    student: student,
                     userType: userType
                 });
             }

@@ -4,10 +4,13 @@
                 <div class="navbar-header">
                     <a class="navbar-brand" href="#">SMS</a>
                 </div>
-                <!-- Use if helper to determine which navbar to render -->
-                {{> adminNav }}
-                {{!-- {{> professorNav }}
-                {{> studentNav }} --}}
+                {{#if admin}}
+                    {{> admin/nav }}
+                {{else if student}}
+                        {{> student/nav}}
+                {{else}}
+                    {{> professor/nav}}
+                {{/if}}
             </div>
         </div>
     </nav>
