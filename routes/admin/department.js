@@ -55,6 +55,7 @@ router.get("/:dept_id", isLoggedIn, function(req, res, next) {
             console.log(error);
         });
 });
+
 // /departments/:id/courses - all  courses  of specific department
 router.get("/:dept_id/courses", isLoggedIn, function(req, res, next) {
     db.Course.findAll({
@@ -63,12 +64,18 @@ router.get("/:dept_id/courses", isLoggedIn, function(req, res, next) {
             }
         })
         .then(function(data) {
-            res.json(data);
+            // res.json(data);
+            var hbsObject = {
+                courses: data,
+                dept: req.params.dept_id
+            };
+            res.render("partials/admin/courses", hbsObject);
         })
         .catch(function(error) {
             console.log(error);
         });
 });
+
 ///departments/:id/courses/:course - see specific course of specific department
 router.get("/:dept_id/courses/:course_id", isLoggedIn, function(req, res, next) {
     db.Course.findOne({
@@ -143,6 +150,7 @@ router.get("/:dept_id/courses/:course_id/:class_id", isLoggedIn, function(req, r
             console.log(error);
         });
 });
+
 // /departments/:id/professors - all professors of specific department
 router.get("/:dept_id/professors", isLoggedIn, function(req, res, next) {
     db.Professor.findAll({
@@ -157,15 +165,21 @@ router.get("/:dept_id/professors", isLoggedIn, function(req, res, next) {
                 model: db.Room
             }, {
                 model: db.Class
-            }]
+            }],
+            order: ['last_name']
         })
         .then(function(data) {
-            res.json(data);
+            var hbsObject = {
+                professors: data,
+                dept: req.params.dept_id
+            };
+            res.render("partials/admin/professors", hbsObject);
         })
         .catch(function(error) {
             console.log(error);
         });
 });
+
 ///departments/:id/professors/:professor - choose a specific professors of specific department
 router.get("/:dept_id/professors/:professor_id", isLoggedIn, function(req, res, next) {
     db.Professor.findOne({
@@ -249,10 +263,15 @@ router.get("/:dept_id/students", isLoggedIn, function(req, res, next) {
                 model: db.Person
             }, {
                 model: db.Department
-            }]
+            }],
+            order: ['last_name']
         })
         .then(function(data) {
-            res.json(data);
+            var hbsObject = {
+                students: data,
+                dept: req.params.dept_id
+            };
+            res.render("partials/admin/students", hbsObject);
         })
         .catch(function(error) {
             console.log(error);

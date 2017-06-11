@@ -1,0 +1,35 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h2>{{dept}} Students</h2>
+            <table>
+                <thead>
+                    <th>Last Name</th>
+                    <th>First Name</th>
+                    <th>Email Address</th>
+                    <th>Phone</th>
+                    <th>Class Level</th>
+                    <th>Address</th>
+                    <th>City</th>
+                    <th>State</th>
+                    <th>Zip Code</th>
+                </thead>
+                <tbody>
+                    {{#students}}
+                    <tr>
+                        <td>{{person.last_name}}</td>
+                        <td>{{person.first_name}}</td>
+                        <td><a href="mailto:{{email}}" target="_top">{{email}}</a></td>
+                        <td>{{person.phone}}</td>
+                        <td>{{class_level}}</td>
+                        <td>{{person.address}}</td>
+                        <td>{{person.city}}</td>
+                        <td>{{person.state}}</td>
+                        <td>{{person.zip_code}}</td>
+                    </tr>
+                    {{/students}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

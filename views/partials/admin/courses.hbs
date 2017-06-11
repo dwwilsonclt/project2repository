@@ -1,0 +1,21 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h2>{{dept}} Courses</h2>
+            <table>
+                <thead>
+                    <th>Course Number</th>
+                    <th>Course Name</th>
+                </thead>
+                <tbody>
+                    {{#courses}}
+                    <tr>
+                        <td>{{course_number}}</td>
+                        <td>{{name}}</td>
+                    </tr>
+                    {{/courses}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
