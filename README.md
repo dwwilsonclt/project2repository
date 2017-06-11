@@ -2,10 +2,10 @@
 UNCC project 2
 
 ## SMS - School Management System
-This is a content management system that facilitates three users: Administratos, Professors, and Students.
+This is application facilitates three users: Administrators, Professors, and Students.
 
 ### Admin
-Upon logging in, an Admin will be greeted with
+Upon logging in, an Admin will be greeted with panels (this design is fluid throughout) that give the admin options to view departments, professors, students, etc. The admin will be able to view all data relating to the current state of the school. He/She will have permissions to add/remove departments, courses, professors, students.
 
 ### Professor
 Upon logging in, a professor will be greeted with
