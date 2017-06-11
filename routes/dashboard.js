@@ -3,7 +3,12 @@ var router = express.Router();
 
 router.get("/", isLoggedIn, function(req, res, next) {
     if (req.session.userType === "Admin") {
-        res.end("this is the Admin homepage");
+
+        //need to tell header what the user is to render nav bar correctly
+        var admin = {
+            admin : true
+        };
+        res.render("partials/admin/dashboard", admin);
         // here we will render the Admin homepage
         // each button/link inside this homepage will have admin in front
         // now we know that all routes that begin with admin (localhost:8080/dashboard/admin/...)
