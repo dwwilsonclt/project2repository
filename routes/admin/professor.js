@@ -3,7 +3,20 @@ var router = express.Router();
 var db = require("../../models");
 
 router.get("/", isLoggedIn, function (req, res, next) {
+    db.Department.findAll()
+      .then(function(data) {
+          res.json(data);
+      })
+      .catch(function(error) {
+          console.log(error);
+      });
+});
+
+router.get("/:department", isLoggedIn, function (req, res, next) {
     db.Professor.findAll({
+        where: {
+            department_id: req.params.department
+        },
         include: [
             {
                 model: db.Person
@@ -13,6 +26,9 @@ router.get("/", isLoggedIn, function (req, res, next) {
             },
             {
                 model: db.Room
+            },
+            {
+                model: db.Class
             }
         ]
     })
@@ -24,14 +40,18 @@ router.get("/", isLoggedIn, function (req, res, next) {
     })
 });
 
-router.get("/:professor", isLoggedIn, function (req, res, next) {
+router.get("/:department/:professor", isLoggedIn, function (req, res, next) {
     db.Professor.findOne({
         where: {
-            id: req.params.professor
+            id: req.params.professor,
+            department_id: req.params.department
         },
         include: [
             {
                 model: db.Person
+            },
+            {
+                model: db.Department
             },
             {
                 model: db.Room
@@ -63,7 +83,7 @@ router.get("/:professor", isLoggedIn, function (req, res, next) {
     })
 });
 
-router.get("/:professor/:class", isLoggedIn, function (req, res, next) {
+router.get("/:department/:professor/:class", isLoggedIn, function (req, res, next) {
     db.Class.findOne({
         where: {
             id: req.params.class,
@@ -87,21 +107,21 @@ router.get("/:professor/:class", isLoggedIn, function (req, res, next) {
                     },
                     {
                         model: db.Room,
-                        include: [
-                            {
-                                model: db.Building
-                            }
-                        ]
+                        // include: [
+                        //     {
+                        //         model: db.Building
+                        //     }
+                        // ]
                     }
                 ]
             },
             {
                 model: db.Room,
-                include: [
-                    {
-                        model: db.Building
-                    }
-                ]
+                // include: [
+                //     {
+                //         model: db.Building
+                //     }
+                // ]
             },
             {
                 model: db.Student,

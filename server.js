@@ -28,6 +28,7 @@ require("./config/passport");
 var index = require("./routes/index");
 var departments = require("./routes/admin/department");
 var professors = require("./routes/admin/professor");
+var students = require("./routes/admin/student");
 var api = require("./routes/api");
 
 var sessionStore = new SequelizeStore({
@@ -73,9 +74,10 @@ app.use(function(req, res, next) {
 });
 
 // Routes ======================================================
+app.use("/dashboard/departments", departments);
+app.use("/dashboard/professors", professors);
+app.use("/dashboard/students", students);
 app.use("/api", api);
-app.use("/departments", departments);
-app.use("/professors", professors);
 app.use("/", index);
 
 
