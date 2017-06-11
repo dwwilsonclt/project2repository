@@ -5,72 +5,78 @@ var db = require("../../models");
 // all departments
 router.get("/", isLoggedIn, function(req, res, next) {
     db.Department.findAll()
-    .then(function(data) {
-        //build a hbsObject with necessary info to pass to render the page
-        var hbsObject = [];
+        .then(function(data) {
+            //build a hbsObject with necessary info to pass to render the page
+            var hbsObject = {};
+            hbsObject.admin = true;
+            hbsObject.panels = [];
 
-        data.forEach(function(department){
-            var obj = {
-                title: department.dataValues.id,
-                descriptions: [
-                    department.dataValues.name
-                ]
-            };
-            hbsObject.push(obj);
+            data.forEach(function(department) {
+                var obj = {
+                    title: department.dataValues.id,
+                    descriptions: [
+                        department.dataValues.name
+                    ]
+                };
+                hbsObject.panels.push(obj);
+            });
+            res.render("partials/admin/allDepartment", hbsObject);
+        })
+        .catch(function(error) {
+            console.log(error);
         });
-        //testing
-        res.json(hbsObject);
-        // res.render("partials/admin/department", hbsObject);
-    })
-    .catch(function(error) {
-        console.log(error);
-    });
 });
 
 // specific department
 router.get("/:dept_id", isLoggedIn, function(req, res, next) {
     db.Department.findOne({
-        where: {
-            id: req.params.dept_id
-        },
-        include: [{
-            model: db.Course
-        },{
-            model: db.Professor
-        },{
-            model: db.Student
-        }]
-    })
-    .then(function(data) {
-        res.json(data);
-    })
-    .catch(function(error) {
-        console.log(error);
-    });
+            where: {
+                id: req.params.dept_id
+            },
+            include: [{
+                model: db.Course
+            }, {
+                model: db.Professor
+            }, {
+                model: db.Student
+            }]
+        })
+        .then(function(data) {
+
+            var hbsObject = {};
+            hbsObject.admin = true;
+            hbsObject.title = data.id;
+            hbsObject.desc = data.name;
+
+            res.render("partials/admin/departmentPage", hbsObject);
+            // res.json(data);
+        })
+        .catch(function(error) {
+            console.log(error);
+        });
 });
 // /departments/:id/courses - all  courses  of specific department
 router.get("/:dept_id/courses", isLoggedIn, function(req, res, next) {
     db.Course.findAll({
-        where: {
-            department_id: req.params.dept_id
-        }
-    })
-    .then(function(data) {
-        res.json(data);
-    })
-    .catch(function(error) {
-        console.log(error);
-    });
+            where: {
+                department_id: req.params.dept_id
+            }
+        })
+        .then(function(data) {
+            res.json(data);
+        })
+        .catch(function(error) {
+            console.log(error);
+        });
 });
 ///departments/:id/courses/:course - see specific course of specific department
 router.get("/:dept_id/courses/:course_id", isLoggedIn, function(req, res, next) {
     db.Course.findOne({
-        where: {
-            id: req.params.course_id,
-            department_id: req.params.dept_id
-        },
-        include: [
-            {
+            where: {
+                id: req.params.course_id,
+                department_id: req.params.dept_id
+            },
+            include: [{
                 model: db.Class,
                 include: [{
                     model: db.Professor,
@@ -84,98 +90,96 @@ router.get("/:dept_id/courses/:course_id", isLoggedIn, function(req, res, next) 
                 }, {
                     model: db.Room
                 }]
+            }]
+        })
+        .then(function(data) {
+            if (!data) {
+                res.send(404);
+            } else {
+                res.json(data);
             }
-        ]
-    })
-    .then(function(data) {
-        if (!data) {
-            res.send(404);
-        } else {
-            res.json(data);
-        }
-    })
-    .catch(function(error) {
-        console.log(error);
-    });
+        })
+        .catch(function(error) {
+            console.log(error);
+        });
 });
 // /departments/:id/courses/:course/classes/:class - see specific class of a specific course of specific department
 router.get("/:dept_id/courses/:course_id/:class_id", isLoggedIn, function(req, res, next) {
     db.Class.findOne({
-        where: {
-            id: req.params.class_id,
-            course_id: req.params.course_id
-        },
-        include: [{
-            model: db.Professor,
+            where: {
+                id: req.params.class_id,
+                course_id: req.params.course_id
+            },
             include: [{
-                model: db.Person
-            },{
+                model: db.Professor,
+                include: [{
+                    model: db.Person
+                }, {
+                    model: db.Room
+                }]
+            }, {
+                model: db.Course
+            }, {
+                model: db.AcademicPeriod
+            }, {
+                model: db.Schedule
+            }, {
                 model: db.Room
+            }, {
+                model: db.Student,
+                include: [{
+                    model: db.Person
+                }]
             }]
-        }, {
-            model: db.Course
-        }, {
-            model: db.AcademicPeriod
-        }, {
-            model: db.Schedule
-        }, {
-            model: db.Room
-        }, {
-            model: db.Student,
-            include: [{
-                model: db.Person
-            }]
-        }]
-    })
-      .then(function(data) {
-          if (!data) {
-              res.send(404);
-          } else {
-              res.json(data);
-          }
-      })
-      .catch(function(error) {
-          console.log(error);
-      });
+        })
+        .then(function(data) {
+            if (!data) {
+                res.send(404);
+            } else {
+                res.json(data);
+            }
+        })
+        .catch(function(error) {
+            console.log(error);
+        });
 });
 // /departments/:id/professors - all professors of specific department
 router.get("/:dept_id/professors", isLoggedIn, function(req, res, next) {
     db.Professor.findAll({
-        where: {
-            department_id: req.params.dept_id
-        },
-        include: [{
-            model: db.Person
-        },{
-            model: db.Department
-        },{
-            model: db.Room
-        },{
-            model: db.Class
-        }]
-    })
-      .then(function(data) {
-          res.json(data);
-      })
-      .catch(function(error) {
-          console.log(error);
-      });
+            where: {
+                department_id: req.params.dept_id
+            },
+            include: [{
+                model: db.Person
+            }, {
+                model: db.Department
+            }, {
+                model: db.Room
+            }, {
+                model: db.Class
+            }]
+        })
+        .then(function(data) {
+            res.json(data);
+        })
+        .catch(function(error) {
+            console.log(error);
+        });
 });
 ///departments/:id/professors/:professor - choose a specific professors of specific department
 router.get("/:dept_id/professors/:professor_id", isLoggedIn, function(req, res, next) {
     db.Professor.findOne({
-        where: {
-            id: req.params.professor_id,
-            department_id: req.params.dept_id
-        },
-        include: [
-            {
+            where: {
+                id: req.params.professor_id,
+                department_id: req.params.dept_id
+            },
+            include: [{
                 model: db.Person
-            },{
+            }, {
                 model: db.Department
-            },{
+            }, {
                 model: db.Room
-            },{
+            }, {
                 model: db.Class,
                 include: [{
                     model: db.Course
@@ -186,89 +190,122 @@ router.get("/:dept_id/professors/:professor_id", isLoggedIn, function(req, res, 
                 }, {
                     model: db.Room
                 }]
-            }
-        ]
-    })
-    .then(function(professor) {
-        res.json(professor);
-    })
-    .catch(function(error) {
-        console.log(error);
-    })
+            }]
+        })
+        .then(function(professor) {
+            res.json(professor);
+        })
+        .catch(function(error) {
+            console.log(error);
+        })
 });
 // /departments/:id/professors/:professor/classes/:class - see specific class of a specific professor of specific department
 router.get("/:dept_id/professors/:professor_id/:class_id", isLoggedIn, function(req, res, next) {
     db.Class.findOne({
-        where: {
-            id: req.params.class_id,
-            professor_id: req.params.professor_id
-        },
-        include: [{
-            model: db.Professor,
+            where: {
+                id: req.params.class_id,
+                professor_id: req.params.professor_id
+            },
             include: [{
-                model: db.Person
-            },{
+                model: db.Professor,
+                include: [{
+                    model: db.Person
+                }, {
+                    model: db.Room
+                }]
+            }, {
+                model: db.Course
+            }, {
+                model: db.AcademicPeriod
+            }, {
+                model: db.Schedule
+            }, {
                 model: db.Room
+            }, {
+                model: db.Student,
+                include: [{
+                    model: db.Person
+                }]
             }]
-        }, {
-            model: db.Course
-        }, {
-            model: db.AcademicPeriod
-        }, {
-            model: db.Schedule
-        }, {
-            model: db.Room
-        }, {
-            model: db.Student,
-            include: [{
-                model: db.Person
-            }]
-        }]
-    })
-      .then(function(data) {
-          if (!data) {
-              res.send(404);
-          } else {
-              res.json(data);
-          }
-      })
-      .catch(function(error) {
-          console.log(error);
-      });
+        })
+        .then(function(data) {
+            if (!data) {
+                res.send(404);
+            } else {
+                res.json(data);
+            }
+        })
+        .catch(function(error) {
+            console.log(error);
+        });
 });
 // /departments/:id/students - all students of specific department
 router.get("/:dept_id/students", isLoggedIn, function(req, res, next) {
     db.Student.findAll({
-        where: {
-            department_id: req.params.dept_id
-        },
-        include: [{
-            model: db.Person
-        },{
-            model: db.Department
-        }]
-    })
-    .then(function(data) {
-        res.json(data);
-    })
-    .catch(function(error) {
-        console.log(error);
-    });
+            where: {
+                department_id: req.params.dept_id
+            },
+            include: [{
+                model: db.Person
+            }, {
+                model: db.Department
+            }]
+        })
+        .then(function(data) {
+            res.json(data);
+        })
+        .catch(function(error) {
+            console.log(error);
+        });
 });
 
 // /departments/:id/students/:student - choose a specific student of specific department
 router.get("/:dept_id/students/:student_id", isLoggedIn, function(req, res, next) {
     db.Student.findOne({
-        where: {
-            id: req.params.student_id,
-            department_id: req.params.dept_id
-        },
-        include: [{
-            model: db.Person
-        },{
-            model: db.Department
-        }, {
-            model: db.Class,
+            where: {
+                id: req.params.student_id,
+                department_id: req.params.dept_id
+            },
+            include: [{
+                model: db.Person
+            }, {
+                model: db.Department
+            }, {
+                model: db.Class,
+                include: [{
+                    model: db.Professor,
+                    include: [{
+                        model: db.Person
+                    }]
+                }, {
+                    model: db.Course
+                }, {
+                    model: db.AcademicPeriod
+                }, {
+                    model: db.Schedule
+                }, {
+                    model: db.Room
+                }]
+            }]
+        })
+        .then(function(data) {
+            if (!data) {
+                res.send(404);
+            } else {
+                res.json(data);
+            }
+        })
+        .catch(function(error) {
+            console.log(error);
+        });
+});
+
+// /departments/:id/students/:student/:class - see specific class of a specific student of specific department
+router.get("/:dept_id/students/:student_id/:class_id", isLoggedIn, function(req, res, next) {
+    db.Class.findOne({
+            where: {
+                id: req.params.class_id
+            },
             include: [{
                 model: db.Professor,
                 include: [{
@@ -282,57 +319,23 @@ router.get("/:dept_id/students/:student_id", isLoggedIn, function(req, res, next
                 model: db.Schedule
             }, {
                 model: db.Room
+            }, {
+                model: db.Student,
+                include: [{
+                    model: db.Person
+                }]
             }]
-        }]
-    })
-    .then(function(data) {
-        if (!data) {
-            res.send(404);
-        } else {
-            res.json(data);
-        }
-    })
-    .catch(function(error) {
-        console.log(error);
-    });
-});
-
-// /departments/:id/students/:student/:class - see specific class of a specific student of specific department
-router.get("/:dept_id/students/:student_id/:class_id", isLoggedIn, function(req, res, next) {
-    db.Class.findOne({
-        where: {
-            id: req.params.class_id
-        },
-        include: [{
-            model: db.Professor,
-            include: [{
-                model: db.Person
-            }]
-        }, {
-            model: db.Course
-        }, {
-            model: db.AcademicPeriod
-        }, {
-            model: db.Schedule
-        }, {
-            model: db.Room
-        }, {
-            model: db.Student,
-            include: [{
-                model: db.Person
-            }]
-        }]
-    })
-      .then(function(data) {
-          if (!data) {
-              res.send(404);
-          } else {
-              res.json(data);
-          }
-      })
-      .catch(function(error) {
-          console.log(error);
-      });
+        })
+        .then(function(data) {
+            if (!data) {
+                res.send(404);
+            } else {
+                res.json(data);
+            }
+        })
+        .catch(function(error) {
+            console.log(error);
+        });
 });
 
 function isLoggedIn(req, res, next) {
