@@ -1,0 +1,40 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h2>{{dept}} Professors</h2>
+            <table>
+                <thead>
+                    <th>Room #</th>
+                    <th>Last Name</th>
+                    <th>First Name</th>
+                    <th>Email Address</th>
+                    <th>Phone</th>
+                    <th>Extention</th>
+                    <th>Address</th>
+                    <th>City</th>
+                    <th>State</th>
+                    <th>Zip Code</th>
+                </thead>
+                <tbody>
+                    {{#professors}}
+                    <tr>
+                        <td>{{room_id}}</td>
+                        <td>{{person.last_name}}</td>
+                        <td>{{person.first_name}}</td>
+                        <td><a href="mailto:{{email}}" target="_top">{{email}}</a></td>
+                        <td>{{phone}}</td>
+                        <td>{{phone_extension}}</td>
+                        <td>{{person.address}}</td>
+                        <td>{{person.city}}</td>
+                        <td>{{person.state}}</td>
+                        <td>{{person.zip_code}}</td>
+                    </tr>
+                    {{/professors}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{{!-- <a href="https://twitter.com/{{twitter}}">@{{twitter}}</a>
+<a href="mailto:someone@example.com" --}}
