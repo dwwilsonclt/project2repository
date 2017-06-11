@@ -6,7 +6,21 @@ var db = require("../../models");
 router.get("/", isLoggedIn, function(req, res, next) {
     db.Department.findAll()
     .then(function(data) {
-        res.json(data);
+        //build a hbsObject with necessary info to pass to render the page
+        var hbsObject = [];
+
+        data.forEach(function(department){
+            var obj = {
+                title: department.dataValues.id,
+                descriptions: [
+                    department.dataValues.name
+                ]
+            };
+            hbsObject.push(obj);
+        });
+        //testing
+        res.json(hbsObject);
+        // res.render("partials/admin/department", hbsObject);
     })
     .catch(function(error) {
         console.log(error);
