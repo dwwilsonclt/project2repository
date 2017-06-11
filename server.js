@@ -25,11 +25,12 @@ var db = require("./models");
 require("./associations")(db);
 require("./config/passport");
 
-var index = require("./routes/index");
-var departments = require("./routes/admin/department");
-var professors = require("./routes/admin/professor");
-var students = require("./routes/admin/student");
+var adminDepartments = require("./routes/admin/department");
+var adminProfessors = require("./routes/admin/professor");
+var adminStudents = require("./routes/admin/student");
+var dashboard = require("./routes/dashboard");
 var api = require("./routes/api");
+var index = require("./routes/index");
 
 var sessionStore = new SequelizeStore({
     db: db.sequelize,
@@ -74,9 +75,10 @@ app.use(function(req, res, next) {
 });
 
 // Routes ======================================================
-app.use("/dashboard/departments", departments);
-app.use("/dashboard/professors", professors);
-app.use("/dashboard/students", students);
+app.use("/dashboard/admin/departments", adminDepartments);
+app.use("/dashboard/admin/professors", adminProfessors);
+app.use("/dashboard/admin/students", adminStudents);
+app.use("/dashboard", dashboard);
 app.use("/api", api);
 app.use("/", index);
 
