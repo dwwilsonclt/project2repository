@@ -103,13 +103,13 @@ th {
     background: #4aaaa5;
     color: #fff;
 }
-tr:nth-child(odd) {
+/*tr:nth-child(odd) {
     background: #eee;
-}
-tr:hover { 
+}*/
+/*tr:hover { 
     background-color: #999;
     color: #fff;
-}
+}*/
 td a {
     color: #000;
     text-decoration: underline;
