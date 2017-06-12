@@ -143,9 +143,8 @@ router.post("/assignment-grade", function(req, res, next) {
         };
         grades.push(obj);
     }
-    // console.log(url);
-    // updateGrades(0, grades);
-    // res.redirect(url);
+    updateGrades(0, grades);
+    res.redirect(url);
 });
 
 function updateGrades(i, grades) {

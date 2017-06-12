@@ -1,5 +1,6 @@
 var express = require("express");
 var router = express.Router();
+var moment = require("moment");
 var db = require("../models");
 
 router.get("/", isLoggedIn, function(req, res, next) {
@@ -20,7 +21,10 @@ router.get("/", isLoggedIn, function(req, res, next) {
                 res.send(404);
             } else {
                 data.dataValues.professor = true;
-                // data.dataValues.isProfessor = true;
+                for (var i = 0; i < data.dataValues.classes.length; i++) {
+                    data.dataValues.classes[i].schedule.begin_time = moment(data.dataValues.classes[i].schedule.begin_time, "hh:mm:ss").format("h:mm A");
+                    data.dataValues.classes[i].schedule.end_time = moment(data.dataValues.classes[i].schedule.end_time, "hh:mm:ss").format("h:mm A");
+                }
                 data.dataValues.url = req.protocol + '://' + req.get('host') + req.originalUrl;
                 // res.json(data);
                 res.render("professor/professor", data.dataValues)
@@ -32,7 +36,10 @@ router.get("/", isLoggedIn, function(req, res, next) {
                 res.send(404);
             } else {
                 data.dataValues.student = true;
-                // data.dataValues.isStudent = true;
+                for (var i = 0; i < data.dataValues.classes.length; i++) {
+                    data.dataValues.classes[i].schedule.begin_time = moment(data.dataValues.classes[i].schedule.begin_time, "hh:mm:ss").format("h:mm A");
+                    data.dataValues.classes[i].schedule.end_time = moment(data.dataValues.classes[i].schedule.end_time, "hh:mm:ss").format("h:mm A");
+                }
                 data.dataValues.url = req.protocol + '://' + req.get('host') + req.originalUrl;
                 // res.json(data);
                 res.render("student/student", data.dataValues)
