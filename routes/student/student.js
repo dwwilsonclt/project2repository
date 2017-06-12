@@ -1,5 +1,6 @@
 var express = require("express");
 var router = express.Router();
+var moment = require("moment");
 var db = require("../../models");
 
 router.get("/:student/classes/:class", isLoggedIn, function (req, res, next) {
@@ -86,7 +87,7 @@ router.get("/:student/classes/:class", isLoggedIn, function (req, res, next) {
                 title: "Schedule",
                 descriptions: [
                     classInfo.academic_period.name,
-                    classInfo.schedule.days + ", " + classInfo.schedule.begin_time + " - " + classInfo.schedule.end_time
+                    classInfo.schedule.days + ", " + moment(classInfo.schedule.begin_time, "hh:mm:ss").format("h:mm A") + " - " + moment(classInfo.schedule.end_time, "hh:mm:ss").format("h:mm A")
                 ],
                 id: classInfo.schedule.id
             };
@@ -155,6 +156,10 @@ router.get("/:student/classes/:class/Professor/:professor", isLoggedIn, function
             res.send(404);
         } else {
             data.dataValues.student = true;
+            for (var i = 0; i < data.dataValues.classes.length; i++) {
+                data.dataValues.classes[i].schedule.begin_time = moment(data.dataValues.classes[i].schedule.begin_time, "hh:mm:ss").format("h:mm A");
+                data.dataValues.classes[i].schedule.end_time = moment(data.dataValues.classes[i].schedule.end_time, "hh:mm:ss").format("h:mm A");
+            }
             data.dataValues.studentId = req.params.student;
             // res.json(data);
             res.render("student/professor", data.dataValues)

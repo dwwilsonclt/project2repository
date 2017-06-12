@@ -1,5 +1,6 @@
 var express = require("express");
 var router = express.Router();
+var moment = require("moment");
 var db = require("../../models");
 
 router.get("/:professor/classes/:class", isLoggedIn, function (req, res, next) {
@@ -76,7 +77,7 @@ router.get("/:professor/classes/:class", isLoggedIn, function (req, res, next) {
                 title: "Schedule",
                 descriptions: [
                     classInfo.academic_period.name,
-                    classInfo.schedule.days + ", " + classInfo.schedule.begin_time + " - " + classInfo.schedule.end_time
+                    classInfo.schedule.days + ", " + moment(classInfo.schedule.begin_time, "hh:mm:ss").format("h:mm A") + " - " + moment(classInfo.schedule.end_time, "hh:mm:ss").format("h:mm A")
                 ],
                 id: classInfo.schedule.id
             };
@@ -198,6 +199,10 @@ router.get("/:professor/classes/:class/Students/:student", isLoggedIn, function 
             res.send(404);
         } else {
             data.dataValues.professor = true;
+            for (var i = 0; i < data.dataValues.classes.length; i++) {
+                data.dataValues.classes[i].schedule.begin_time = moment(data.dataValues.classes[i].schedule.begin_time, "hh:mm:ss").format("h:mm A");
+                data.dataValues.classes[i].schedule.end_time = moment(data.dataValues.classes[i].schedule.end_time, "hh:mm:ss").format("h:mm A");
+            }
             data.dataValues.professorId = req.params.professor;
             res.render("professor/student", data.dataValues)
         }
@@ -289,7 +294,7 @@ router.get("/:professor/classes/:class/Assignments/1/:topic_name/:topic_id", isL
             var obj = {
                 title: assignment.dataValues.name,
                 descriptions: [
-                    assignment.dataValues.due_date
+                    moment.tz(moment(assignment.dataValues.due_date).add(5,"hours"), "America/New_York").format("MMM DD, YYYY")
                 ],
                 id: assignment.dataValues.id
             };
