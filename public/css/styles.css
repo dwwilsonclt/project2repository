@@ -114,3 +114,31 @@ td a {
     color: #000;
     text-decoration: underline;
 }
+
+#personal-info h2 {
+    margin-top: 0;
+}
+
+#personal-info .col-md-6:last-of-type p {
+    margin-bottom: 5px;
+}
+
+#personal-info .col-md-6:last-of-type p:first-child {
+    margin-top: 43px;
+}
+
+.action-button {
+    margin-bottom: 20px;
+}
+
+#grades {
+    margin-bottom: 100px;
+}
+
+#grade-name-title {
+    height: 40px;
+}
+
+#grade-name {
+    height: 49px;
+}

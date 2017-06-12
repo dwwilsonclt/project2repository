@@ -33,6 +33,60 @@ router.post("/new-schedule", function(req, res, next) {
     })
 });
 
+router.post("/new-asgmnt-topic", function(req, res, next) {
+    var url = req.body.sourceUrl;
+    delete req.body["sourceUrl"];
+    req.body.weight = parseFloat(parseInt(req.body.weight) / 100);
+    req.body.class_id = parseInt(req.body.class_id);
+    db.Coursework.create(req.body)
+    .then(function() {
+        res.redirect(url);
+    })
+    .catch(function(error) {
+        console.log(error);
+    });
+});
+
+router.post("/new-assignment", function(req, res, next) {
+    var url = req.body.sourceUrl;
+    var classId = req.body.class_id;
+    delete req.body["sourceUrl"];
+    delete req.body["class_id"];
+    var assignmentId;
+    req.body.due_date = new Date(req.body.due_date);
+    req.body.coursework_id = parseInt(req.body.coursework_id);
+    db.Assignment.create(req.body)
+    .then(function(assignment) {
+        assignmentId = assignment.dataValues.id;
+        return db.Class.findOne({
+            where: {
+                id: classId
+            },
+            include: [
+                {
+                    model: db.Student
+                }
+            ]
+        });
+    })
+    .then(function(classInfo) {
+        var studentAssignments = [];
+        classInfo.dataValues.students.forEach(function(student) {
+            studentAssignments.push({
+                student_id: student.id,
+                assignment_id: assignmentId
+            });
+        });
+        return db.AssignmentStudent.bulkCreate(studentAssignments);
+    })
+    .then(function() {
+        res.redirect(url);
+    })
+    .catch(function(error) {
+        console.log(error);
+    });
+});
+
 // Updates
 router.post("/update-department/:id", function(req, res, next) {
     db.Department.update(req.body, {
@@ -75,5 +129,43 @@ router.post("/update-class/:id", function(req, res, next) {
         console.log(error);
     })
 });
+
+router.post("/assignment-grade", function(req, res, next) {
+    console.log(req.body);
+    var url = req.body.sourceUrl;
+    delete req.body["sourceUrl"];
+    var grades = [];
+    for (var i = 0; i < req.body.grade.length; i++) {
+        var obj = {
+            grade: req.body.grade[i] !== "" ? parseInt(req.body.grade[i]) : null,
+            student_id: parseInt(req.body.student_id[i]),
+            assignment_id: parseInt(req.body.assignment_id)
+        };
+        grades.push(obj);
+    }
+    // console.log(url);
+    // updateGrades(0, grades);
+    // res.redirect(url);
+});
+
+function updateGrades(i, grades) {
+    if (i < grades.length) {
+        db.AssignmentStudent.update({
+            grade: grades[i].grade
+        },{
+            where: {
+                student_id: grades[i].student_id,
+                assignment_id: grades[i].assignment_id
+            }
+        })
+        .then(function() {
+            i++;
+            updateGrades(i, grades);
+        })
+        .catch(function(error) {
+            console.log(error);
+        });
+    }
+}
 
 module.exports = router;

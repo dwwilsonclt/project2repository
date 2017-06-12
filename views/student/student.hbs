@@ -1,0 +1,58 @@
+<div class="container">
+    {{!--{{#if admin}}--}}
+        {{!--{{#if isProfessor}}--}}
+            {{!--<a href="/dashboard/admin/addclass">--}}
+                {{!--<button type="button" class="btn btn-primary student-action-button">Add a class</button>--}}
+            {{!--</a>--}}
+        {{!--{{/if}}--}}
+    {{!--{{else if isStudent}}--}}
+    <a href="/dashboard/student/{{this.id}}/enroll">
+        <button type="button" class="btn btn-primary student-action-button">Enroll in a class</button>
+    </a>
+    <a href="/dashboard/student/{{this.id}}/withdraw">
+        <button type="button" class="btn btn-danger student-action-button">Withdraw from a class</button>
+    </a>
+    {{!--{{/if}}--}}
+    <div class="jumbotron" id="personal-info">
+        <div class="row">
+            <div class="col-md-6">
+                <h2>{{this.person.first_name}} {{this.person.last_name}}</h2>
+                <p>Phone: {{this.person.phone}}</p>
+                <p>Email: {{this.email}}</p>
+                <p>Department: {{this.department.name}}</p>
+            </div>
+            <div class="col-md-6">
+                <p>Address:</p>
+                <p>{{this.person.address}}</p>
+                <p>{{this.person.city}}, {{this.person.state}} {{this.person.zip_code}}</p>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Classes for {{this.classes.0.academic_period.name}}</h3>
+                </div>
+                <div class="panel-body">
+                    {{#each this.classes as |class|}}
+                        <div class="col-md-4">
+                            <a href="{{../url}}/student/{{../id}}/classes/{{class.id}}">
+                                <div class="panel panel-default">
+                                    <div class="panel-body">
+                                        <div class="page-header">
+                                            <h3>{{class.course.department_id}} {{class.course.course_number}}-{{class.section}}</h3>
+                                            <p>{{class.academic_period.name}}</p>
+                                            <p>{{class.room.building_id}} {{class.room.room_number}}</p>
+                                            <p>{{class.schedule.days}}, {{class.schedule.begin_time}} - {{class.schedule.end_time}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    {{/each}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
