@@ -1,5 +1,6 @@
 var express = require("express");
 var router = express.Router();
+var db = require("../models");
 
 router.get("/", isLoggedIn, function(req, res, next) {
     if (req.session.userType === "Admin") {
@@ -14,19 +15,120 @@ router.get("/", isLoggedIn, function(req, res, next) {
         // now we know that all routes that begin with admin (localhost:8080/dashboard/admin/...)
         // are for an Admin view
     } else if (req.session.userType === "Professor") {
-        res.end("This is the professor homepage");
-        // here we will render the Professor homepage
-        // each button/link inside this homepage will have professor in front
-        // now we know that all routes that begin with professor (localhost:8080/dashboard/professor/...)
-        // are for a Professor view
+        professorHome(req, function(data) {
+            if (!data) {
+                res.send(404);
+            } else {
+                data.dataValues.professor = true;
+                // data.dataValues.isProfessor = true;
+                data.dataValues.url = req.protocol + '://' + req.get('host') + req.originalUrl;
+                // res.json(data);
+                res.render("professor/professor", data.dataValues)
+            }
+        });
     } else if (req.session.userType === "Student") {
-        res.end("This is the Student homepage");
-        // here we will render the Student homepage
-        // each button/link inside this homepage will have student in front
-        // now we know that all routes that begin with student (localhost:8080/dashboard/student/...)
-        // are for a Student view
+        studentHome(req, function(data) {
+            if (!data) {
+                res.send(404);
+            } else {
+                data.dataValues.student = true;
+                // data.dataValues.isStudent = true;
+                data.dataValues.url = req.protocol + '://' + req.get('host') + req.originalUrl;
+                // res.json(data);
+                res.render("student/student", data.dataValues)
+            }
+        });
     }
 });
+
+function professorHome(req, cb) {
+    db.Professor.findOne({
+        where: {
+            email: req.session.passport.user
+        },
+        include: [
+            {
+                model: db.Person
+            },
+            {
+                model: db.Department
+            },
+            {
+                model: db.Room
+            },
+            {
+                model: db.Class,
+                include: [
+                    {
+                        model: db.Course
+                    },
+                    {
+                        model: db.AcademicPeriod
+                    },
+                    {
+                        model: db.Schedule
+                    },
+                    {
+                        model: db.Room
+                    }
+                ]
+            }
+        ]
+    })
+    .then(function(professor) {
+        cb(professor);
+    })
+    .catch(function(error) {
+        console.log(error);
+    })
+}
+
+function studentHome(req, cb) {
+    db.Student.findOne({
+        where: {
+            email: req.session.passport.user
+        },
+        include: [
+            {
+                model: db.Person
+            },
+            {
+                model: db.Department
+            },
+            {
+                model: db.Class,
+                include: [
+                    {
+                        model: db.Professor,
+                        include: [
+                            {
+                                model: db.Person
+                            }
+                        ]
+                    },
+                    {
+                        model: db.Course
+                    },
+                    {
+                        model: db.AcademicPeriod
+                    },
+                    {
+                        model: db.Schedule
+                    },
+                    {
+                        model: db.Room
+                    }
+                ]
+            }
+        ]
+    })
+    .then(function(data) {
+        cb(data);
+    })
+    .catch(function(error) {
+        console.log(error);
+    });
+}
 
 function isLoggedIn(req, res, next) {
     if (req.isAuthenticated()) {

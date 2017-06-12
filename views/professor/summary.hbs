@@ -1,0 +1,35 @@
+<div class="container">
+    {{#if asignmentTopicsPage}}
+        <a href="{{this.url}}/add-assignment-topic">
+            <button type="button" class="btn btn-primary action-button">Add Assignment Topic</button>
+        </a>
+        <a href="/dashboard/professor/{{this.class.professor.id}}/class/{{this.class.id}}/remove-assignment-topic">
+            <button type="button" class="btn btn-danger action-button">Remove Assignment Topic</button>
+        </a>
+    {{else if assignmentsPage}}
+        <a href="{{this.url}}/add-assignment">
+            <button type="button" class="btn btn-primary action-button">Add Assignment</button>
+        </a>
+        <a href="/dashboard/professor/{{this.class.professor.id}}/topic/{{this.id}}/remove-assignment">
+            <button type="button" class="btn btn-danger action-button">Remove Assignment</button>
+        </a>
+    {{/if}}
+    <div class="row">
+        {{#each panels as |panel|}}
+            <a href="{{../url}}/{{panel.title}}/{{panel.id}}">
+                <div class="col-md-4">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="page-header">
+                                <h3>{{panel.title}}</h3>
+                                {{#each panel.descriptions as |desc|}}
+                                    <p>{{desc}}</p>
+                                {{/each}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        {{/each}}
+    </div>
+</div>
