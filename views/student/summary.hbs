@@ -2,7 +2,6 @@
     <div class="row">
         {{#each panels as |panel|}}
             <a href="{{../url}}/{{panel.title}}/{{panel.id}}">
-
                 <div class="col-md-4">
                     <div class="panel panel-default">
                         <div class="panel-body">
@@ -15,18 +14,6 @@
                         </div>
                     </div>
                 </div>
-
-
-                {{!--<div class="col-md-4">--}}
-                    {{!--<div class="well well-lg">--}}
-                        {{!--<h2>{{panel.title}}</h2>--}}
-                        {{!--{{#each panel.descriptions as |desc|}}--}}
-                            {{!--<p>{{desc}}</p>--}}
-                        {{!--{{/each}}--}}
-                    {{!--</div>--}}
-                {{!--</div>--}}
-
-
             </a>
         {{/each}}
     </div>

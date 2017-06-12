@@ -92,18 +92,12 @@ router.get("/:student/classes/:class", isLoggedIn, function (req, res, next) {
             };
             hbsObject.panels[3] = {
                 title: "Assignments",
-                descriptions: [
-                    // classInfo.academic_period.name,
-                    // classInfo.schedule.days + ", " + classInfo.schedule.begin_time + " - " + classInfo.schedule.end_time
-                ],
+                descriptions: [],
                 id: 1
             };
             hbsObject.panels[4] = {
                 title: "Grades",
-                descriptions: [
-                    // classInfo.academic_period.name,
-                    // classInfo.schedule.days + ", " + classInfo.schedule.begin_time + " - " + classInfo.schedule.end_time
-                ]
+                descriptions: []
             };
             hbsObject.panels[5] = {
                 title: "Students",
@@ -162,8 +156,6 @@ router.get("/:student/classes/:class/Professor/:professor", isLoggedIn, function
         } else {
             data.dataValues.student = true;
             data.dataValues.studentId = req.params.student;
-            // data.dataValues.isStudent = true;
-            // data.dataValues.url = req.protocol + '://' + req.get('host') + req.originalUrl;
             // res.json(data);
             res.render("student/professor", data.dataValues)
         }
