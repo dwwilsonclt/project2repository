@@ -339,28 +339,75 @@ router.get("/:professor/classes/:class/Assignments/1/:topic_name/:topic_id/:asgn
         ]
     })
     .then(function(data) {
-        // var hbsObject = {};
-        // hbsObject.professor = true;
-        // hbsObject.assignmentsPage = true;
-        // hbsObject.url = req.protocol + '://' + req.get('host') + req.originalUrl;
-        // hbsObject.panels = [];
-        // data.forEach(function(assignment) {
-        //     var obj = {
-        //         title: assignment.dataValues.name,
-        //         descriptions: [
-        //             assignment.dataValues.due_date
-        //         ],
-        //         id: assignment.dataValues.id
-        //     };
-        //     hbsObject.panels.push(obj);
-        // });
+        var urlTemp = (req.protocol + '://' + req.get('host') + req.originalUrl).split("/");
+        var newUrl = "";
+        for (var i = 0; i < urlTemp.length - 2; i++) {
+            newUrl += urlTemp[i] + "/";
+        }
+        newUrl = newUrl.substring(0, newUrl.length-1);
         data.dataValues.professor = true;
-        data.dataValues.sourceurl = req.protocol + '://' + req.get('host') + req.originalUrl;
+        data.dataValues.url = newUrl;
         // res.json(data);
-        res.render("forms/grade", data);
+        res.render("forms/grade", data.dataValues);
     })
     .catch(function(error) {
         console.log(error);
+    });
+});
+
+router.get("/:professor/classes/:class/Grades", isLoggedIn, function (req, res, next) {
+    db.Assignment.findAll({
+        include: [
+            {
+                model: db.Student,
+                include: [
+                    {
+                        model: db.Person
+                    }
+                ]
+            },
+            {
+                model: db.Coursework,
+                where: {
+                    class_id: req.params.class
+                },
+                include: [
+                    {
+                        model: db.Class,
+                        include: [
+                            {
+                                model: db.Course
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    })
+    .then(function(assignments) {
+        var hbsObject = {};
+        hbsObject.professor = true;
+        hbsObject.className = assignments[0].dataValues.coursework.class.course.department_id + " " + assignments[0].dataValues.coursework.class.course.course_number + "-" + assignments[0].dataValues.coursework.class.section;
+        var totalStudents = assignments[0].dataValues.students.length;
+        hbsObject.assignments = [];
+        hbsObject.students = [];
+        for (var i = 0; i < totalStudents; i++) {
+            var student = {};
+            student.assignments = [];
+            student.name = assignments[0].dataValues.students[i].person.first_name + " " + assignments[0].dataValues.students[i].person.last_name;
+            assignments.forEach(function(assignment) {
+                student.assignments.push(assignment.students[i].assignment_student.grade);
+                if (i === 0) {
+                    hbsObject.assignments.push(assignment.name);
+                }
+            });
+            hbsObject.students.push(student);
+        }
+        // res.json(hbsObject);
+        res.render("professor/grades", hbsObject)
+    })
+    .catch(function(error) {
+      console.log(error);
     });
 });
 
