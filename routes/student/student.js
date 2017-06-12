@@ -273,6 +273,62 @@ router.get("/:student/classes/:class/Assignments/1/:topic_name/:topic_id", isLog
     });
 });
 
+router.get("/:student/classes/:class/Grades", isLoggedIn, function (req, res, next) {
+    db.Student.findOne({
+        where: {
+            id: req.params.student
+        },
+        include: [
+            {
+                model: db.Person
+            },
+            {
+                model: db.Assignment,
+                include: [
+                    {
+                        model: db.Coursework,
+                        where: {
+                            class_id: req.params.class
+                        },
+                        include: [
+                            {
+                                model: db.Class,
+                                include: [
+                                    {
+                                        model: db.Course
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    })
+    .then(function(data) {
+        if (data) {
+            var hbsObject = {};
+            hbsObject.student = true;
+            hbsObject.className = data.dataValues.assignments[0].coursework.class.course.department_id + " " + data.dataValues.assignments[0].coursework.class.course.course_number + "-" + data.dataValues.assignments[0].coursework.class.section;
+            hbsObject.assignments = [];
+            data.dataValues.assignments.forEach(function(assignment) {
+                var obj = {
+                    name: assignment.name,
+                    grade: assignment.assignment_student.grade
+                };
+                hbsObject.assignments.push(obj);
+            });
+            // res.json(hbsObject);
+            res.render("student/grades", hbsObject)
+        } else {
+            res.end("You don't have any assignments for this class yet.")
+        }
+    })
+    .catch(function(error) {
+        console.log(error);
+    });
+});
+
 function isLoggedIn(req, res, next) {
     if (req.isAuthenticated()) {
         return next();
