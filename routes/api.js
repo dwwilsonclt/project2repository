@@ -4,19 +4,95 @@ var db = require("../models");
 
 // Creates
 router.post("/new-department", function(req, res, next) {
+    var url = req.body.sourceUrl;
+    delete req.body.sourceUrl;
     db.Department.create(req.body)
     .then(function() {
-        res.redirect(req.body.sourceUrl);
+        res.redirect(req.body.url);
     })
     .catch(function(error) {
         console.log(error);
+    });
+});
+
+router.post("/new-professor", function(req, res, next) {
+    var url = req.body.sourceUrl;
+    delete req.body.sourceUrl;
+    db.Professor.create(req.body)
+    .then(function() {
+        res.redirect(req.body.url);
     })
+    .catch(function(error) {
+        console.log(error);
+    });
+});
+
+router.post("/new-student", function(req, res, next) {
+    var url = req.body.sourceUrl;
+    delete req.body.sourceUrl;
+    db.Student.create(req.body)
+    .then(function() {
+        res.redirect(req.body.url);
+    })
+    .catch(function(error) {
+        console.log(error);
+    });
+});
+
+router.post("/new-course", function(req, res, next) {
+    var url = req.body.sourceUrl;
+    delete req.body.sourceUrl;
+    db.Course.create(req.body)
+    .then(function() {
+        res.redirect(req.body.url);
+    })
+    .catch(function(error) {
+        console.log(error);
+    });
+});
+
+router.post("/new-class", function(req, res, next) {
+    var url = req.body.sourceUrl;
+    delete req.body.sourceUrl;
+    db.Class.create(req.body)
+    .then(function() {
+        res.redirect(req.body.url);
+    })
+    .catch(function(error) {
+        console.log(error);
+    });
+});
+
+router.post("/new-building", function(req, res, next) {
+    var url = req.body.sourceUrl;
+    delete req.body.sourceUrl;
+    db.Building.create(req.body)
+    .then(function() {
+        res.redirect(req.body.url);
+    })
+    .catch(function(error) {
+        console.log(error);
+    });
+});
+
+router.post("/new-room", function(req, res, next) {
+    var url = req.body.sourceUrl;
+    delete req.body.sourceUrl;
+    db.Room.create(req.body)
+    .then(function() {
+        res.redirect(req.body.url);
+    })
+    .catch(function(error) {
+        console.log(error);
+    });
 });
 
 router.post("/new-acdm-period", function(req, res, next) {
+    var url = req.body.sourceUrl;
+    delete req.body.sourceUrl;
     db.AcademicPeriod.create(req.body)
     .then(function() {
-        res.redirect(req.body.sourceUrl);
+        res.redirect(req.body.url);
     })
     .catch(function(error) {
         console.log(error);
@@ -24,9 +100,11 @@ router.post("/new-acdm-period", function(req, res, next) {
 });
 
 router.post("/new-schedule", function(req, res, next) {
+    var url = req.body.sourceUrl;
+    delete req.body.sourceUrl;  
     db.Schedule.create(req.body)
     .then(function() {
-        res.redirect(req.body.sourceUrl);
+        res.redirect(req.body.url);
     })
     .catch(function(error) {
         console.log(error);
@@ -36,6 +114,7 @@ router.post("/new-schedule", function(req, res, next) {
 router.post("/new-asgmnt-topic", function(req, res, next) {
     var url = req.body.sourceUrl;
     delete req.body["sourceUrl"];
+
     req.body.weight = parseFloat(parseInt(req.body.weight) / 100);
     req.body.class_id = parseInt(req.body.class_id);
     db.Coursework.create(req.body)
@@ -89,13 +168,15 @@ router.post("/new-assignment", function(req, res, next) {
 
 // Updates
 router.post("/update-department/:id", function(req, res, next) {
+     var url = req.body.sourceUrl;
+    delete req.body.sourceUrl; 
     db.Department.update(req.body, {
         where: {
             id: req.params.id
         }
     })
     .then(function() {
-        res.redirect(req.body.sourceUrl);
+        res.redirect(req.body.url);
     })
     .catch(function(error) {
         console.log(error);
@@ -103,13 +184,15 @@ router.post("/update-department/:id", function(req, res, next) {
 });
 
 router.post("/update-course/:id", function(req, res, next) {
+    var url = req.body.sourceUrl;
+    delete req.body.sourceUrl;  
     db.Course.update(req.body, {
         where: {
             id: req.params.id
         }
     })
     .then(function() {
-        res.redirect(req.body.sourceUrl);
+        res.redirect(req.body.url);
     })
     .catch(function(error) {
         console.log(error);
@@ -117,13 +200,47 @@ router.post("/update-course/:id", function(req, res, next) {
 });
 
 router.post("/update-class/:id", function(req, res, next) {
+    var url = req.body.sourceUrl;
+    delete req.body.sourceUrl;  
     db.Class.update(req.body, {
         where: {
             id: req.params.id
         }
     })
     .then(function() {
-        res.redirect(req.body.sourceUrl);
+        res.redirect(req.body.url);
+    })
+    .catch(function(error) {
+        console.log(error);
+    })
+});
+
+router.post("/update-professor/:id", function(req, res, next) {
+    var url = req.body.sourceUrl;
+    delete req.body.sourceUrl;  
+    db.Professor.update(req.body, {
+        where: {
+            id: req.params.id
+        }
+    })
+    .then(function() {
+        res.redirect(req.body.url);
+    })
+    .catch(function(error) {
+        console.log(error);
+    })
+});
+
+router.post("/update-student/:id", function(req, res, next) {
+    var url = req.body.sourceUrl;
+    delete req.body.sourceUrl;  
+    db.Student.update(req.body, {
+        where: {
+            id: req.params.id
+        }
+    })
+    .then(function() {
+        res.redirect(req.body.url);
     })
     .catch(function(error) {
         console.log(error);
