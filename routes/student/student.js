@@ -311,13 +311,49 @@ router.get("/:student/classes/:class/Grades", isLoggedIn, function (req, res, ne
             hbsObject.student = true;
             hbsObject.className = data.dataValues.assignments[0].coursework.class.course.department_id + " " + data.dataValues.assignments[0].coursework.class.course.course_number + "-" + data.dataValues.assignments[0].coursework.class.section;
             hbsObject.assignments = [];
+            hbsObject.coursework = {};
+            hbsObject.coursework.names = ["Num. of topics"];
+            hbsObject.coursework.values = [0];
             data.dataValues.assignments.forEach(function(assignment) {
                 var obj = {
                     name: assignment.name,
                     grade: assignment.assignment_student.grade
                 };
                 hbsObject.assignments.push(obj);
+                if (hbsObject.coursework.names.indexOf(assignment.coursework.name.replace(" ", "_")) === -1) {
+                    hbsObject.coursework.names.push(assignment.coursework.name.replace(" ", "_"));
+                    hbsObject.coursework.names.push(assignment.coursework.name.replace(" ", "_") + "_n");
+                    hbsObject.coursework.names.push(assignment.coursework.name.replace(" ", "_") + "_weight");
+                    hbsObject.coursework.values.push(assignment.assignment_student.grade);
+                    hbsObject.coursework.values.push(1);
+                    hbsObject.coursework.values.push(assignment.coursework.weight);
+                    hbsObject.coursework.values[0]++;
+                } else {
+                    var index = hbsObject.coursework.names.indexOf(assignment.coursework.name.replace(" ", "_"));
+                    hbsObject.coursework.values[index] += assignment.assignment_student.grade;
+                    hbsObject.coursework.values[index+1]++;
+                }
             });
+            hbsObject.averages = [];
+            hbsObject.finalGrade = 0;
+            for (var i = 0; i < hbsObject.coursework.values[0]; i++) {
+                var obj = {
+                    name: hbsObject.coursework.names[1+3*i].replace("_", " "),
+                    grade: parseFloat(hbsObject.coursework.values[1+3*i] / hbsObject.coursework.values[2+3*i]).toFixed(2)
+                };
+                hbsObject.averages.push(obj);
+                hbsObject[hbsObject.coursework.names[1+3*i]] = parseFloat(hbsObject.coursework.values[1+3*i] / hbsObject.coursework.values[2+3*i]).toFixed(2);
+                hbsObject.finalGrade += hbsObject[hbsObject.coursework.names[1+3*i]] * hbsObject.coursework.values[3+3*i];
+                if (i === hbsObject.coursework.values[0] - 1) {
+                    hbsObject.letterGrade = hbsObject.finalGrade >= 90 ? "A" : hbsObject.finalGrade >= 80 ? "B" : hbsObject.finalGrade >= 70 ? "C" : hbsObject.finalGrade >= 60 ? "D" : "F";
+                    hbsObject.finalGrade = hbsObject.finalGrade.toFixed(2);
+                    delete hbsObject.coursework;
+                    break;
+                }
+            }
+            for (var i = 0; i < hbsObject.averages.length; i++) {
+                delete hbsObject[hbsObject.averages[i].name];
+            }
             // res.json(hbsObject);
             res.render("student/grades", hbsObject)
         } else {
