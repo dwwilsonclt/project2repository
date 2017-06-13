@@ -395,14 +395,42 @@ router.get("/:professor/classes/:class/Grades", isLoggedIn, function (req, res, 
             var student = {};
             student.assignments = [];
             student.name = assignments[0].dataValues.students[i].person.first_name + " " + assignments[0].dataValues.students[i].person.last_name;
+            student.coursework = {};
+            student.coursework.names = ["Num. of topics"];
+            student.coursework.values = [0];
             assignments.forEach(function(assignment) {
                 student.assignments.push(assignment.students[i].assignment_student.grade);
+                if (student.coursework.names.indexOf(assignment.coursework.name.replace(" ", "_")) === -1) {
+                    student.coursework.names.push(assignment.coursework.name.replace(" ", "_"));
+                    student.coursework.names.push(assignment.coursework.name.replace(" ", "_") + "_n");
+                    student.coursework.names.push(assignment.coursework.name.replace(" ", "_") + "_weight");
+                    student.coursework.values.push(assignment.students[i].assignment_student.grade);
+                    student.coursework.values.push(1);
+                    student.coursework.values.push(assignment.coursework.weight);
+                    student.coursework.values[0]++;
+                } else {
+                    var index = student.coursework.names.indexOf(assignment.coursework.name.replace(" ", "_"));
+                    student.coursework.values[index] += assignment.students[i].assignment_student.grade;
+                    student.coursework.values[index+1]++;
+                }
                 if (i === 0) {
                     hbsObject.assignments.push(assignment.name);
                 }
             });
+            student.finalGrade = 0;
+            for (var j = 0; j < student.coursework.values[0]; j++) {
+                student[student.coursework.names[1+3*j]] = parseFloat(student.coursework.values[1+3*j] / student.coursework.values[2+3*j]);
+                student.finalGrade += student[student.coursework.names[1+3*j]] * student.coursework.values[3+3*j];
+                if (j === student.coursework.values[0] - 1) {
+                    student.letterGrade = student.finalGrade >= 90 ? "A" : student.finalGrade >= 80 ? "B" : student.finalGrade >= 70 ? "C" : student.finalGrade >= 60 ? "D" : "F";
+                    student.finalGrade = student.finalGrade.toFixed(2);
+                    delete student.coursework;
+                    break;
+                }
+            }
             hbsObject.students.push(student);
         }
+
         // res.json(hbsObject);
         res.render("professor/grades", hbsObject)
     })

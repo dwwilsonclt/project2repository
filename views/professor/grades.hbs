@@ -9,6 +9,8 @@
                         {{#each this.assignments as |assignment|}}
                             <th>{{assignment}}</th>
                         {{/each}}
+                        <th>Final Grade</th>
+                        <th>Letter Grade</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -18,6 +20,8 @@
                         {{#each student.assignments as |assignment|}}
                             <td>{{assignment}}</td>
                         {{/each}}
+                        <td>{{student.finalGrade}}</td>
+                        <td>{{student.letterGrade}}</td>
                     </tr>
                 {{/each}}
                 </tbody>
