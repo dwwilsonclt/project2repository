@@ -5,6 +5,7 @@ var db = require("../models");
 // Creates
 router.post("/new-department", function(req, res, next) {
     var url = req.body.sourceUrl;
+    console.log(url);
     delete req.body.sourceUrl;
     db.Department.create(req.body)
     .then(function() {
