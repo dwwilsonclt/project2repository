@@ -50,9 +50,26 @@ router.get("/departments/add-professor", isLoggedIn, function (req, res, next) {
         newUrl += urlTemp[i] + "/";
     }
     newUrl = newUrl.substring(0, newUrl.length-1);
-    res.render("partials/admin/newProfessor", {
-        classId: req.params.class,
-        sourceUrl: newUrl
+    var hbsObject = {};
+    hbsObject.classId = req.params.class;
+    hbsObject.sourceUrl = newUrl;
+    hbsObject.departments = [];
+    hbsObject.rooms = [];
+    db.Department.findAll()
+    .then(function (data) {
+        data.forEach(function(department)            
+            {
+               hbsObject.departments.push(department.dataValues);
+            });
+        return db.Room.findAll();
+    })
+    .then(function (data) {
+        data.forEach(function(room)            
+            {
+               hbsObject.rooms.push(room.dataValues);
+            });
+        // res.json(hbsObject);
+        res.render("partials/admin/newProfessor", hbsObject );
     });
 });
 
