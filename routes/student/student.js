@@ -3,11 +3,39 @@ var router = express.Router();
 var moment = require("moment");
 var db = require("../../models");
 
-router.post("/enroll", function (req, res, next) {
-    req.session.enrollDpmt = req.body.department_id;
-    // res.redirect(req.protocol + 's://' + req.get('host') + req.originalUrl);
-    res.redirect(req.get('referer'));
-    console.log(req.session);
+router.post("/enroll/setDepartment", function (req, res, next) {
+    db.Course.findAll({
+        where: {
+            department_id: req.body.department_id
+        }
+    })
+    .then(function(courses) {
+        res.json(courses);
+    })
+    .catch(function (error) {
+        console.log(error);
+    });
+});
+
+router.post("/enroll/setCourse", function (req, res, next) {
+    db.Class.findAll({
+        where: {
+            course_id: req.body.course_id,
+            academic_period_id: req.body.academic_period_id
+        },
+        include: [
+            {
+                model: db.Course
+            }
+        ]
+    })
+    .then(function(classes) {
+        // console.log(classes);
+        res.json(classes);
+    })
+    .catch(function (error) {
+        console.log(error);
+    });
 });
 
 router.get("/enroll", isLoggedIn, function (req, res, next) {
