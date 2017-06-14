@@ -151,3 +151,14 @@ td a {
     color: #4aaaa5;
 }
 
+.formBg {
+    background-color: #fff;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #4aaaa5;
+    border-radius: 5px;
+}
+
+form {
+    padding: 30px;
+}

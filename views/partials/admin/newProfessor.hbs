@@ -1,147 +1,134 @@
 <div class="container">
     <div class="row">
-        <div class="col-md-6 col-md-offset-3">
+        <div class="col-md-10 col-md-offset-1 formBg">
             <form action="/api/new-professor" method="POST" class="form-horizontal">
-                <fieldset>
-                    <!-- Form Name -->
-                    <legend>Add a new professor</legend>
+                <legend>Add a new professor</legend>
+                <div class="col-md-6">
                     <!-- Text input-->
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="first_name">First Name</label>
-                        <div class="col-md-4">
+                        <div class="col-md-8">
                             <input id="first_name" name="first_name" type="text" placeholder="" class="form-control input-md">
                         </div>
                     </div>
                     <!-- Text input-->
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="last_name">Last Name</label>
-                        <div class="col-md-4">
+                        <div class="col-md-8">
                             <input id="last_name" name="last_name" type="text" placeholder="" class="form-control input-md">
                         </div>
                     </div>
                     <!-- Text input-->
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="date_of_birth">Date of Birth</label>
-                        <div class="col-md-4">
+                        <div class="col-md-8">
                             <input id="date_of_birth" name="date_of_birth" type="text" placeholder="" class="form-control input-md">
                         </div>
                     </div>
                     <!-- Text input-->
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="gender">Gender</label>
-                        <div class="col-md-4">
+                        <div class="col-md-8">
                             <input id="gender" name="gender" type="text" placeholder="" class="form-control input-md">
                         </div>
                     </div>
                     <!-- Text input-->
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="phone_p">Personal Phone</label>
-                        <div class="col-md-4">
+                        <div class="col-md-8">
                             <input id="phone_p" name="phone_p" type="text" placeholder="" class="form-control input-md">
                         </div>
                     </div>
                     <!-- Text input-->
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="email_p">Personal Email</label>
-                        <div class="col-md-4">
+                        <div class="col-md-8">
                             <input id="email_p" name="email_p" type="text" placeholder="" class="form-control input-md">
                         </div>
                     </div>
                     <!-- Text input-->
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="address">Street Address</label>
-                        <div class="col-md-4">
+                        <div class="col-md-8">
                             <input id="address" name="address" type="text" placeholder="" class="form-control input-md">
                         </div>
                     </div>
                     <!-- Text input-->
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="city">City</label>
-                        <div class="col-md-4">
+                        <div class="col-md-8">
                             <input id="city" name="city" type="text" placeholder="" class="form-control input-md">
                         </div>
                     </div>
                     <!-- Text input-->
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="state">State</label>
-                        <div class="col-md-4">
+                        <div class="col-md-8">
                             <input id="state" name="state" type="text" placeholder="" class="form-control input-md">
                         </div>
                     </div>
                     <!-- Text input-->
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="zip_code">Zip Code</label>
-                        <div class="col-md-4">
+                        <div class="col-md-8">
                             <input id="zip_code" name="zip_code" type="text" placeholder="" class="form-control input-md">
                         </div>
                     </div>
+                </div>
+                <div class="col-md-6">
                     <!-- Text input-->
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="country">Country</label>
-                        <div class="col-md-4">
+                        <div class="col-md-8">
                             <input id="country" name="country" type="text" placeholder="" class="form-control input-md">
                         </div>
                     </div>
                     <!-- Text input-->
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="phone_edu">School Phone</label>
-                        <div class="col-md-4">
+                        <div class="col-md-8">
                             <input id="phone_edu" name="phone_edu" type="text" placeholder="" class="form-control input-md">
                         </div>
                     </div>
                     <!-- Text input-->
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="phone_extension">Extension</label>
-                        <div class="col-md-4">
+                        <div class="col-md-8">
                             <input id="phone_extension" name="phone_extension" type="text" placeholder="" class="form-control input-md">
                         </div>
                     </div>
                     <!-- Text input-->
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="email_edu">School Email</label>
-                        <div class="col-md-4">
+                        <div class="col-md-8">
                             <input id="email_edu" name="email_edu" type="text" placeholder="" class="form-control input-md">
                         </div>
                     </div>
-
-
                     <!-- Text input-->
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="department_id">Department</label>
-                        <div class="col-md-4">
-                        <select class="form-control" name="department_id">
-                            {{#each this.departments as |department|}}
-                              <option value="{{department.id}}">{{department.id}} - {{department.name}}</option>
-                            {{/each}}
-                        </select>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-md-4 control-label">Office Building</label>
-                        <div class="col-md-4">
-                            <select class="form-control" id="building">
-                                {{#each this.buildings as |building|}}
-                                    <option value="{{building.id}}">{{building.name}}</option>
+                        <div class="col-md-8">
+                            <select class="form-control" name="department_id">
+                                {{#each this.departments as |department|}}
+                                <option value="{{department.id}}">{{department.id}} - {{department.name}}</option>
                                 {{/each}}
                             </select>
                         </div>
                     </div>
-
                     <div class="form-group">
-                        <label class="col-md-4 control-label" for="room_id">Office Room</label>
-                        <div class="col-md-4">
-                        <select class="form-control" name="room_id" id="room"></select>
+                        <label class="col-md-4 control-label" for="department_id">Office</label>
+                        <div class="col-md-8">
+                            <select class="form-control" name="room_id">
+                                {{#each this.rooms as |room|}}
+                                <option value="{{room.id}}">{{room.building_id}} {{room.room_number}}</option>
+                                {{/each}}
+                            </select>
                         </div>
                     </div>
-
-
-
-
                     <!-- Password input-->
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="password">Password</label>
-                        <div class="col-md-4">
+                        <div class="col-md-8">
                             <input id="password" name="password" type="password" placeholder="" class="form-control input-md">
                         </div>
                     </div>
@@ -152,8 +139,7 @@
                             <button type="submit" id="singlebutton" name="singlebutton" class="btn btn-default">Submit</button>
                         </div>
                     </div>
-                </fieldset>
+                </div>
             </form>
         </div>
     </div>
-</div>
