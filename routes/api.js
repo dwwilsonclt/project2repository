@@ -18,7 +18,9 @@ router.post("/new-department", function(req, res, next) {
 router.post("/new-professor", function(req, res, next) {
     var url = req.body.sourceUrl;
     delete req.body.sourceUrl;
-    db.Person.create({
+    var newPerson;
+    var newProfessor;
+    db.Person.build({
         first_name: req.body.first_name,
         last_name: req.body.last_name,
         date_of_birth: req.body.date_of_birth,
@@ -32,6 +34,7 @@ router.post("/new-professor", function(req, res, next) {
         country: req.body.country
     })
     .then(function(person) {
+        newPerson = person;
         return db.Professor.build({
             phone: req.body.phone_edu,
             phone_extension: req.body.phone_extension,
@@ -43,12 +46,17 @@ router.post("/new-professor", function(req, res, next) {
         });
     })
     .then(function(professor) {
+        newProfessor = professor;
         db.Person.encryptPassword(professor.dataValues.password, function(hash) {
-            professor.dataValues.password = hash;
-            professor.save().then(function() {
-                res.redirect(url);
-            });
+            newProfessor.dataValues.password = hash;
+            return newPerson.save();
         });
+    })
+    .then(function() {
+        return newProfessor.save();
+    })
+    .then(function() {
+        res.redirect(url);
     })
     .catch(function(error) {
         console.log(error);
