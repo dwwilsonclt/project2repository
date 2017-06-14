@@ -23,8 +23,8 @@ router.post("/new-professor", function(req, res, next) {
         last_name: req.body.last_name,
         date_of_birth: req.body.date_of_birth,
         gender: req.body.gender,
-        phone: req.body.phone,
-        email: req.body.email,
+        phone: req.body.phone_p,
+        email: req.body.email_p,
         address: req.body.address,
         city: req.body.city,
         state: req.body.state,
@@ -33,9 +33,9 @@ router.post("/new-professor", function(req, res, next) {
     })
     .then(function(person) {
         return db.Professor.build({
-            phone: req.body.phoneEdu,
+            phone: req.body.phone_edu,
             phone_extension: req.body.phone_extension,
-            email: req.body.emailEdu,
+            email: req.body.email_edu,
             password: req.body.password,
             person_id: person.dataValues.id,
             room_id: req.body.room_id,
