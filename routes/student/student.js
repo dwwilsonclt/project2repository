@@ -4,54 +4,10 @@ var moment = require("moment");
 var db = require("../../models");
 
 router.post("/enroll", function (req, res, next) {
-    // req.session.enrollDpmt = "";
     req.session.enrollDpmt = req.body.department_id;
+    // res.redirect(req.protocol + 's://' + req.get('host') + req.originalUrl);
+    res.redirect(req.get('referer'));
     console.log(req.session);
-    var hbsObject = {};
-    db.AcademicPeriod.findAll()
-    .then(function(data) {
-      hbsObject.academicPeriods = [];
-      data.forEach(function(acdmPeriod) {
-          var obj = {
-              id: acdmPeriod.id,
-              name: acdmPeriod.name
-          };
-          hbsObject.academicPeriods.push(obj);
-      });
-      return db.Department.findAll();
-    })
-    .then(function(data) {
-      hbsObject.departments = [];
-      data.forEach(function(department) {
-          var obj = {
-              id: department.id,
-              name: department.name
-          };
-          hbsObject.departments.push(obj);
-      });
-      console.log(req.session);
-      return db.Course.findAll({
-          where: {
-              department_id: req.session.enrollDpmt
-          }
-      });
-    })
-    .then(function(data) {
-      hbsObject.courses = [];
-      data.forEach(function(course) {
-          var obj = {
-              id: course.id,
-              name: course.department_id + " " + course.course_number
-          };
-          hbsObject.courses.push(obj);
-      });
-      // res.json(data);
-      // res.json(hbsObject);
-      res.redirect("/dashboard/student/enroll", hbsObject);
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
 });
 
 router.get("/enroll", isLoggedIn, function (req, res, next) {
@@ -71,34 +27,37 @@ router.get("/enroll", isLoggedIn, function (req, res, next) {
     .then(function(data) {
         hbsObject.departments = [];
         data.forEach(function(department) {
+            var selected = department.id === req.session.enrollDpmt;
             var obj = {
                 id: department.id,
-                name: department.name
+                name: department.name,
+                selected: selected
             };
             hbsObject.departments.push(obj);
         });
         console.log(req.session);
         return db.Course.findAll({
             where: {
-                department_id: hbsObject.departments[0].id
+                // department_id: hbsObject.departments[0].id
+                department_id: req.session.enrollDpmt
             }
         });
     })
     .then(function(data) {
         hbsObject.courses = [];
         data.forEach(function(course) {
-        var obj = {
-            id: course.id,
-            name: course.department_id + " " + course.course_number
-        };
-        hbsObject.courses.push(obj);
+            var obj = {
+                id: course.id,
+                name: course.department_id + " " + course.course_number
+            };
+            hbsObject.courses.push(obj);
         });
         // res.json(data);
         // res.json(hbsObject);
         res.render("forms/classEnroll", hbsObject);
     })
     .catch(function (error) {
-        console.log(error);
+      console.log(error);
     });
 });
 
