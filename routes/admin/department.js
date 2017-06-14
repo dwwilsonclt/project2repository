@@ -66,6 +66,7 @@ router.get("/:dept_id/courses", isLoggedIn, function(req, res, next) {
         .then(function(data) {
             // res.json(data);
             var hbsObject = {
+                admin : true,
                 courses: data,
                 dept: req.params.dept_id
             };
@@ -170,6 +171,7 @@ router.get("/:dept_id/professors", isLoggedIn, function(req, res, next) {
         })
         .then(function(data) {
             var hbsObject = {
+                admin: true,
                 professors: data,
                 dept: req.params.dept_id
             };
@@ -268,6 +270,7 @@ router.get("/:dept_id/students", isLoggedIn, function(req, res, next) {
         })
         .then(function(data) {
             var hbsObject = {
+                admin: true,
                 students: data,
                 dept: req.params.dept_id
             };
