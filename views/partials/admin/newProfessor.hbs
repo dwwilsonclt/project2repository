@@ -116,13 +116,19 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-md-4 control-label" for="department_id">Office</label>
+                        <label class="col-md-4 control-label">Office Building</label>
                         <div class="col-md-8">
-                            <select class="form-control" name="room_id">
-                                {{#each this.rooms as |room|}}
-                                <option value="{{room.id}}">{{room.building_id}} {{room.room_number}}</option>
+                            <select class="form-control" id="building">
+                                {{#each this.buildings as |building|}}
+                                <option value="{{building.id}}">{{building.name}}</option>
                                 {{/each}}
                             </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="room_id">Office Room</label>
+                        <div class="col-md-8">
+                            <select class="form-control" name="room_id" id="room"></select>
                         </div>
                     </div>
                     <!-- Password input-->
