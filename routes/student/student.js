@@ -47,7 +47,7 @@ router.post("/enroll", function (req, res, next) {
       });
       // res.json(data);
       // res.json(hbsObject);
-      res.render("forms/classEnroll", hbsObject);
+      res.redirect("/dashboard/student/enroll", hbsObject);
     })
     .catch(function (error) {
       console.log(error);

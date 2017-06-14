@@ -8,7 +8,7 @@ router.post("/new-department", function(req, res, next) {
     delete req.body.sourceUrl;
     db.Department.create(req.body)
     .then(function() {
-        res.redirect(req.body.url);
+        res.redirect(url);
     })
     .catch(function(error) {
         console.log(error);
@@ -18,9 +18,37 @@ router.post("/new-department", function(req, res, next) {
 router.post("/new-professor", function(req, res, next) {
     var url = req.body.sourceUrl;
     delete req.body.sourceUrl;
-    db.Professor.create(req.body)
-    .then(function() {
-        res.redirect(req.body.url);
+    db.Person.create({
+        first_name: req.body.first_name,
+        last_name: req.body.last_name,
+        date_of_birth: req.body.date_of_birth,
+        gender: req.body.gender,
+        phone: req.body.phone,
+        email: req.body.email,
+        address: req.body.address,
+        city: req.body.city,
+        state: req.body.state,
+        zip_code: req.body.zip_code,
+        country: req.body.country
+    })
+    .then(function(person) {
+        return db.Professor.build({
+            phone: req.body.phoneEdu,
+            phone_extension: req.body.phone_extension,
+            email: req.body.emailEdu,
+            password: req.body.password,
+            person_id: person.dataValues.id,
+            room_id: req.body.room_id,
+            department_id: req.body.department_id
+        });
+    })
+    .then(function(professor) {
+        db.User.encryptPassword(professor.dataValues.password, function(hash) {
+            professor.dataValues.password = hash;
+            professor.save().then(function() {
+                res.redirect(url);
+            });
+        });
     })
     .catch(function(error) {
         console.log(error);
