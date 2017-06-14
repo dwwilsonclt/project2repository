@@ -4,7 +4,7 @@
             <form>
                 <div class="form-group">
                     <label for="academic_period_id">Academic Period</label>
-                    <select class="form-control">
+                    <select class="form-control" id="period">
                         {{#each this.academicPeriods as |period|}}
                             <option value="{{period.id}}">{{period.name}}</option>
                         {{/each}}
@@ -20,21 +20,11 @@
                 </div>
                 <div class="form-group">
                     <label for="course_id">Course</label>
-                    <select class="form-control">
-                        {{#each this.courses as |course|}}
-                            <option value="{{course.id}}">{{course.name}}</option>
-                        {{/each}}
-                    </select>
+                    <select class="form-control" id="course"></select>
                 </div>
                 <div class="form-group">
                     <label for="class_id">Class</label>
-                    <select class="form-control">
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
-                    </select>
+                    <select class="form-control" id="class"></select>
                 </div>
                 <button type="submit" class="btn btn-default">Enroll</button>
             </form>
