@@ -43,6 +43,25 @@ router.get("/departments/add-department", isLoggedIn, function (req, res, next) 
     });
 });
 
+router.post("/departments/add-professor/setBldg", function (req, res, next) {
+    db.Room.findAll({
+        where: {
+            building_id: req.body.building_id
+        },
+        include: [
+            {
+                model: db.Building
+            }
+        ]
+    })
+    .then(function(rooms) {
+        res.json(rooms);
+    })
+    .catch(function (error) {
+        console.log(error);
+    });
+});
+
 router.get("/departments/add-professor", isLoggedIn, function (req, res, next) {
     var urlTemp = (req.protocol + '://' + req.get('host') + req.originalUrl).split("/");
     var newUrl = "";
@@ -54,20 +73,19 @@ router.get("/departments/add-professor", isLoggedIn, function (req, res, next) {
     hbsObject.classId = req.params.class;
     hbsObject.sourceUrl = newUrl;
     hbsObject.departments = [];
-    hbsObject.rooms = [];
+    hbsObject.buildings = [];
+    // hbsObject.rooms = [];
     db.Department.findAll()
     .then(function (data) {
-        data.forEach(function(department)            
-            {
-               hbsObject.departments.push(department.dataValues);
-            });
-        return db.Room.findAll();
+        data.forEach(function(department) {
+           hbsObject.departments.push(department.dataValues);
+        });
+        return db.Building.findAll();
     })
     .then(function (data) {
-        data.forEach(function(room)            
-            {
-               hbsObject.rooms.push(room.dataValues);
-            });
+        data.forEach(function(building) {
+           hbsObject.buildings.push(building.dataValues);
+        });
         // res.json(hbsObject);
         res.render("partials/admin/newProfessor", hbsObject );
     });
