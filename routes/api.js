@@ -19,35 +19,31 @@ router.post("/new-department", function(req, res, next) {
 router.post("/new-professor", function(req, res, next) {
     var url = req.body.sourceUrl;
     delete req.body.sourceUrl;
-    var newPerson = db.Person.build({
-        first_name: req.body.first_name,
-        last_name: req.body.last_name,
-        date_of_birth: req.body.date_of_birth,
-        gender: req.body.gender,
-        phone: req.body.phone_p,
-        email: req.body.email_p,
-        address: req.body.address,
-        city: req.body.city,
-        state: req.body.state,
-        zip_code: req.body.zip_code,
-        country: req.body.country
-    });
-
-    var newProfessor = db.Professor.build({
-        phone: req.body.phone_edu,
-        phone_extension: req.body.phone_extension,
-        email: req.body.email_edu,
-        password: req.body.password,
-        person_id: person.dataValues.id,
-        room_id: req.body.room_id,
-        department_id: req.body.department_id
-    });
 
     db.Person.encryptPassword(req.body.password, function(hash) {
-        newProfessor.dataValues.password = hash;
-        newPerson.save()
-        .then(function() {
-            return newProfessor.save();
+        db.Person.create({
+            first_name: req.body.first_name,
+            last_name: req.body.last_name,
+            date_of_birth: req.body.date_of_birth,
+            gender: req.body.gender,
+            phone: req.body.phone_p,
+            email: req.body.email_p,
+            address: req.body.address,
+            city: req.body.city,
+            state: req.body.state,
+            zip_code: req.body.zip_code,
+            country: req.body.country
+        })
+        .then(function(person) {
+            return db.Professor.create({
+                phone: req.body.phone_edu,
+                phone_extension: req.body.phone_extension,
+                email: req.body.email_edu,
+                password: hash,
+                person_id: person.dataValues.id,
+                room_id: req.body.room_id,
+                department_id: req.body.department_id
+            });
         })
         .then(function() {
             res.redirect(url);
