@@ -4,13 +4,13 @@
         <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Departments</h3>
+                    <h3 class="panel-title"><a href="/dashboard/admin/departments">Departments</a></h3>
                 </div>
                 <div class="panel-body">
                     {{#each panels as |panel|}}
                     <div class="col-md-4">
                         <div class="panel panel-default">
-                            <a href="departments/{{panel.title}}">
+                            <a href="/dashboard/admin/departments/{{panel.title}}">
                                 <div class="panel-body">
                                     <div class="page-header">
                                         <h3>{{panel.title}}</h3>
