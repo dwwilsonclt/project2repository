@@ -61,7 +61,7 @@ form {
 #login-form {
     position: absolute;
     width: 300px;
-    height: 400px;
+/*    height: 400px;*/
     top: 50%;
     left: 50%;
     margin: -200px 0 0 -150px;
@@ -151,7 +151,7 @@ td a {
     color: #4aaaa5;
 }
 
-.formBg {
+.whiteBg {
     background-color: #fff;
     border-style: solid;
     border-width: 1px;
