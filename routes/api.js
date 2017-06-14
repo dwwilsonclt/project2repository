@@ -43,7 +43,7 @@ router.post("/new-professor", function(req, res, next) {
         });
     })
     .then(function(professor) {
-        db.User.encryptPassword(professor.dataValues.password, function(hash) {
+        db.Person.encryptPassword(professor.dataValues.password, function(hash) {
             professor.dataValues.password = hash;
             professor.save().then(function() {
                 res.redirect(url);
