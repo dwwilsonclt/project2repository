@@ -3,6 +3,7 @@ var router = express.Router();
 var db = require("../../models");
 
 // all departments
+// localhost:8080/dashboard/admin/departments
 router.get("/", isLoggedIn, function(req, res, next) {
     db.Department.findAll()
         .then(function(data) {
@@ -27,34 +28,64 @@ router.get("/", isLoggedIn, function(req, res, next) {
         });
 });
 
-// specific department
+
+// localhost:8080/dashboard/admin/departments/depa/add
+router.get("/departments/add-department", isLoggedIn, function (req, res, next) {
+    var urlTemp = (req.protocol + '://' + req.get('host') + req.originalUrl).split("/");
+    var newUrl = "";
+    for (var i = 0; i < urlTemp.length - 2; i++) {
+        newUrl += urlTemp[i] + "/";
+    }
+    newUrl = newUrl.substring(0, newUrl.length-1);
+    res.render("partials/admin/newDepartment", {
+        classId: req.params.class,
+        sourceUrl: newUrl
+    });
+});
+
+router.get("/departments/add-professor", isLoggedIn, function (req, res, next) {
+    var urlTemp = (req.protocol + '://' + req.get('host') + req.originalUrl).split("/");
+    var newUrl = "";
+    for (var i = 0; i < urlTemp.length - 2; i++) {
+        newUrl += urlTemp[i] + "/";
+    }
+    newUrl = newUrl.substring(0, newUrl.length-1);
+    res.render("partials/admin/newProfessor", {
+        classId: req.params.class,
+        sourceUrl: newUrl
+    });
+});
+
+
+// localhost:8080/dashboard/admin/departments/:dept_id
 router.get("/:dept_id", isLoggedIn, function(req, res, next) {
     db.Department.findOne({
-            where: {
-                id: req.params.dept_id
-            },
-            include: [{
-                model: db.Course
-            }, {
-                model: db.Professor
-            }, {
-                model: db.Student
-            }]
-        })
-        .then(function(data) {
+        where: {
+            id: req.params.dept_id
+        },
+        include: [{
+            model: db.Course
+        }, {
+            model: db.Professor
+        }, {
+            model: db.Student
+        }]
+    })
+    .then(function(data) {
 
-            var hbsObject = {};
-            hbsObject.admin = true;
-            hbsObject.title = data.id;
-            hbsObject.desc = data.name;
+        var hbsObject = {};
+        hbsObject.admin = true;
+        hbsObject.title = data.dataValues.id;
+        hbsObject.desc = data.dataValues.name;
 
-            res.render("partials/admin/departmentPage", hbsObject);
-            // res.json(data);
-        })
-        .catch(function(error) {
-            console.log(error);
-        });
+        res.render("partials/admin/departmentPage", hbsObject);
+        // res.json(data);
+    })
+    .catch(function(error) {
+        console.log(error);
+    });
 });
+
 
 // /departments/:id/courses - all  courses  of specific department
 router.get("/:dept_id/courses", isLoggedIn, function(req, res, next) {

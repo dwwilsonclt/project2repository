@@ -1,12 +1,14 @@
 /********STYLES**********/
 
 body {
+
     background-image: url('../images/w4.jpg');
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
     height: 100%;
+
     padding-bottom: 70px;
 }
 
