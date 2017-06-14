@@ -28,6 +28,7 @@ require("./config/passport");
 var adminDepartments = require("./routes/admin/department");
 var adminProfessors = require("./routes/admin/professor");
 var adminStudents = require("./routes/admin/student");
+var adminStats = require("./routes/admin/stats");
 var professor = require("./routes/professor/professor");
 var student = require("./routes/student/student");
 var dashboard = require("./routes/dashboard");
@@ -80,6 +81,7 @@ app.use(function(req, res, next) {
 app.use("/dashboard/admin/departments", adminDepartments);
 app.use("/dashboard/admin/professors", adminProfessors);
 app.use("/dashboard/admin/students", adminStudents);
+app.use("/dashboard/admin/stats", adminStats);
 app.use("/dashboard/professor", professor);
 app.use("/dashboard/student", student);
 app.use("/dashboard", dashboard);
