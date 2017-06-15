@@ -4,16 +4,13 @@ var moment = require("moment");
 var db = require("../../models");
 
 router.get("/", isLoggedIn, function (req, res, next) {
-    db.Professor.findAll({
+    db.Student.findAll({
         include: [
             {
                 model: db.Person
             },
             {
                 model: db.Department
-            },
-            {
-                model: db.Room
             },
             {
                 model: db.Class
@@ -23,17 +20,17 @@ router.get("/", isLoggedIn, function (req, res, next) {
     .then(function(data) {
         var hbsObject = {};
         hbsObject.admin = true;
-        hbsObject.title = "Professors";
+        hbsObject.title = "Students";
         hbsObject.url = req.protocol + '://' + req.get('host') + req.originalUrl;
         hbsObject.people = [];
-        data.forEach(function(professor) {
+        data.forEach(function(student) {
             var obj = {
-                first_name: professor.person.first_name,
-                last_name: professor.person.last_name,
-                email: professor.email,
-                department: professor.department.id,
-                classes: professor.classes.length,
-                id: professor.id
+                first_name: student.person.first_name,
+                last_name: student.person.last_name,
+                email: student.email,
+                department: student.department.id,
+                classes: student.classes.length,
+                id: student.id
             };
             hbsObject.people.push(obj);
         });
@@ -41,14 +38,14 @@ router.get("/", isLoggedIn, function (req, res, next) {
         res.render("admin/professors-students", hbsObject);
     })
     .catch(function(error) {
-        console.log(error);
+      console.log(error);
     })
 });
 
-router.get("/:professor", isLoggedIn, function (req, res, next) {
-    db.Professor.findOne({
+router.get("/:student", isLoggedIn, function (req, res, next) {
+    db.Student.findOne({
         where: {
-            id: req.params.professor
+            id: req.params.student
         },
         include: [
             {
@@ -58,11 +55,16 @@ router.get("/:professor", isLoggedIn, function (req, res, next) {
                 model: db.Department
             },
             {
-                model: db.Room
-            },
-            {
                 model: db.Class,
                 include: [
+                    {
+                        model: db.Professor,
+                        include: [
+                            {
+                                model: db.Person
+                            }
+                        ]
+                    },
                     {
                         model: db.Course
                     },
@@ -84,7 +86,6 @@ router.get("/:professor", isLoggedIn, function (req, res, next) {
             res.send(404);
         } else {
             data.dataValues.admin = true;
-            data.dataValues.isProfessor = true;
             for (var i = 0; i < data.dataValues.classes.length; i++) {
                 data.dataValues.classes[i].schedule.begin_time = moment(data.dataValues.classes[i].schedule.begin_time, "hh:mm:ss").format("h:mm A");
                 data.dataValues.classes[i].schedule.end_time = moment(data.dataValues.classes[i].schedule.end_time, "hh:mm:ss").format("h:mm A");
@@ -96,45 +97,35 @@ router.get("/:professor", isLoggedIn, function (req, res, next) {
     })
     .catch(function(error) {
         console.log(error);
-    })
+    });
 });
 
-router.get("/:professor/:class", isLoggedIn, function (req, res, next) {
+router.get("/:student/:class", isLoggedIn, function(req, res, next) {
     db.Class.findOne({
         where: {
             id: req.params.class
         },
-        include: [
-            {
-                model: db.Course
-            },
-            {
-                model: db.AcademicPeriod
-            },
-            {
-                model: db.Schedule
-            },
-            {
-                model: db.Professor,
-                include: [
-                    {
-                        model: db.Person
-                    },
-                    {
-                        model: db.Room
-                    }
-                ]
-            },
-            {
+        include: [{
+            model: db.Professor,
+            include: [{
+                model: db.Person
+            },{
                 model: db.Room
-            },
-            {
-                model: db.Student,
-                include: {
-                    model: db.Person
-                }
-            }
-        ]
+            }]
+        }, {
+            model: db.Course
+        }, {
+            model: db.AcademicPeriod
+        }, {
+            model: db.Schedule
+        }, {
+            model: db.Room
+        }, {
+            model: db.Student,
+            include: [{
+                model: db.Person
+            }]
+        }]
     })
     .then(function(data) {
         var classInfo = data.dataValues;

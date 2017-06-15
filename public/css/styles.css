@@ -1,7 +1,16 @@
 /********STYLES**********/
 
 body {
-    background-image: url('../images/ticks.png');
+
+    background-image: url('../images/body-background.jpg');
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 100%;
+
+    padding-bottom: 70px;
 }
 
 h1,
@@ -46,21 +55,6 @@ form {
     padding-top: 10px;
 }
 
-.content img {
-    float: left;
-    padding: 0px 15px 15px 0px;
-}
-
-.caption {
-    background-color: #4aaaa5;
-}
-
-.caption h3 {
-    font-size: 20px;
-    color: #fff;
-    text-align: center;
-}
-
 #nav-list {
     padding-top: 30px;
 }
@@ -68,25 +62,124 @@ form {
 #login-form {
     position: absolute;
     width: 300px;
-    height: 400px;
+/*    height: 400px;*/
     top: 50%;
     left: 50%;
-    margin: -250px 0 0 -150px;
+    margin: -200px 0 0 -150px;
 }
 
 .login-btn {
     width: 100%;
 }
 
-#sign-in {
-    text-shadow: 0 1px 0 #fff;
-    background-image: -webkit-linear-gradient(top, #fff 0, #4aaaa5 100%);
-    background-image: -o-linear-gradient(top, #fff 0, #4aaaa5 100%);
-    background-image: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#4aaaa5));
-    background-image: linear-gradient(to bottom, #fff 0, #4aaaa5 100%);
-    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#ffe0e0e0', GradientType=0);
-    filter: progid: DXImageTransform.Microsoft.gradient(enabled=false);
-    background-repeat: repeat-x;
-    border-color: #dbdbdb;
-    border-color: #ccc;
+table {
+    margin: 10px;
+    align-content: center;
+}
+
+th,
+td {
+    padding: 5px;
+    border: 1px solid #999;
+}
+
+th {
+    background: #4aaaa5;
+    color: #fff;
+}
+
+
+/*tr:nth-child(odd) {
+    background: #eee;
+}*/
+
+
+/*tr:hover {
+    background-color: #999;
+    color: #fff;
+}*/
+
+td a {
+    color: #000;
+    text-decoration: underline;
+}
+
+
+/*login*/
+
+.blur {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-size: cover;
+    -webkit-filter: blur(4px);
+    -moz-filter: blur(4px);
+    -ms-filter: blur(4px);
+    -o-filter: blur(4px);
+    filter: blur(4px);
+}
+
+#personal-info h2 {
+    margin-top: 0;
+}
+
+#personal-info .col-md-6:last-of-type p {
+    margin-bottom: 5px;
+}
+
+#personal-info .col-md-6:last-of-type p:first-child {
+    margin-top: 43px;
+}
+
+.action-button {
+    margin-bottom: 20px;
+}
+
+#grades {
+    margin-bottom: 100px;
+}
+
+#grade-name-title {
+    height: 40px;
+}
+
+#grade-name {
+    height: 49px;
+}
+
+.panel-title{
+    color: #4aaaa5;
+}
+
+.whiteBg {
+    background-color: #fff;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #4aaaa5;
+    border-radius: 5px;
+}
+
+form {
+    padding: 30px;
+}
+
+/*.chart {*/
+/**/
+/*}*/
+
+.amcharts-pie-slice {
+    transform: scale(1);
+    transform-origin: 50% 50%;
+    transition-duration: 0.3s;
+    transition: all .3s ease-out;
+    -webkit-transition: all .3s ease-out;
+    -moz-transition: all .3s ease-out;
+    -o-transition: all .3s ease-out;
+    cursor: pointer;
+    box-shadow: 0 0 30px 0 #000;
+}
+
+.amcharts-pie-slice:hover {
+    transform: scale(1.1);
+    filter: url(#shadow);
 }

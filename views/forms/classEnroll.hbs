@@ -1,0 +1,33 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <form>
+                <div class="form-group">
+                    <label for="academic_period_id">Academic Period</label>
+                    <select class="form-control" id="period">
+                        {{#each this.academicPeriods as |period|}}
+                            <option value="{{period.id}}">{{period.name}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="department_id">Department</label>
+                    <select class="form-control" id="department">
+                        {{#each this.departments as |department|}}
+                            <option value="{{department.id}}">{{department.id}} - {{department.name}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="course_id">Course</label>
+                    <select class="form-control" id="course"></select>
+                </div>
+                <div class="form-group">
+                    <label for="class_id">Class</label>
+                    <select class="form-control" id="class"></select>
+                </div>
+                <button type="submit" class="btn btn-default">Enroll</button>
+            </form>
+        </div>
+    </div>
+</div>
