@@ -5,9 +5,9 @@
                 <label>Name</label>
             </div>
             {{#each this.students as |student|}}
-                <div class="row" id="grade-name">
-                    {{student.person.first_name}} {{student.person.last_name}}
-                </div>
+            <div class="row" id="grade-name">
+                {{student.person.first_name}} {{student.person.last_name}}
+            </div>
             {{/each}}
             <div class="row"></div>
         </div>
@@ -19,12 +19,12 @@
                     </div>
                 </div>
                 {{#each this.students as |student|}}
-                    <div class="row">
-                        <div class="form-group">
-                            <input type="text" class="form-control" name="grade" placeholder="90" value="{{#if student.assignment_student.grade}}{{student.assignment_student.grade}}{{/if}}">
-                            <input type="hidden" name="student_id" value="{{student.id}}">
-                        </div>
+                <div class="row">
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="grade" placeholder="90" value="{{#if student.assignment_student.grade}}{{student.assignment_student.grade}}{{/if}}">
+                        <input type="hidden" name="student_id" value="{{student.id}}">
                     </div>
+                </div>
                 {{/each}}
                 <div class="row">
                     <input type="hidden" name="assignment_id" value="{{this.students.0.assignment_student.assignment_id}}">
