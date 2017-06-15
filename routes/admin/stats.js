@@ -85,30 +85,54 @@ router.post("/chart/:id", isLoggedIn, function(req, res, next) {
             break;
 
         case "3":
-            db.Student.findAll({
+            db.Department.findAll({
                 include: [
                     {
-                        model: db.Department
+                        model: db.Student
                     }
                 ]
             })
-            .then(function (students) {
+            .then(function (departments) {
                 var data = [];
-                var departments = [];
+                var departmentNames = [];
                 var values = [];
-                students.forEach(function(student) {
-                    if (departments.indexOf(student.department.name) === -1) {
-                        departments.push(student.department.name);
-                        values.push(1);
-                    } else {
-                        var index = departments.indexOf(student.department.name);
-                        values[index]++;
-                    }
+                departments.forEach(function(department) {
+                    departmentNames.push(department.name);
+                    values.push(department.students.length);
                 });
-                for (var i = 0; i < departments.length; i++) {
+                for (var i = 0; i < departmentNames.length; i++) {
                     data.push({
-                        department: departments[i],
+                        department: departmentNames[i],
                         students: values[i]
+                    });
+                }
+                res.json(data);
+            })
+            .catch(function(error) {
+                console.log(error);
+            });
+            break;
+
+        case "4":
+            db.Department.findAll({
+                include: [
+                    {
+                        model: db.Professor
+                    }
+                ]
+            })
+            .then(function (departments) {
+                var data = [];
+                var departmentNames = [];
+                var values = [];
+                departments.forEach(function(department) {
+                    departmentNames.push(department.name);
+                    values.push(department.professors.length);
+                });
+                for (var i = 0; i < departmentNames.length; i++) {
+                    data.push({
+                        department: departmentNames[i],
+                        professors: values[i]
                     });
                 }
                 res.json(data);
