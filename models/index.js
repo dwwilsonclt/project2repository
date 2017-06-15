@@ -1,34 +1,19 @@
 'use strict';
-
-var fs        = require('fs');
-var path      = require('path');
+var env       = require("../config/env");
 var Sequelize = require('sequelize');
-var basename  = path.basename(module.filename);
-var env       = process.env.NODE_ENV || 'development';
-var config    = require(__dirname + '/../config/config.json')[env];
 var db        = {};
-console.log(basename);
-if (config.use_env_variable) {
-  var sequelize = new Sequelize(process.env[config.use_env_variable]);
-} else {
-  var sequelize = new Sequelize(config.database, config.username, config.password, config);
-}
 
-// fs
-//   .readdirSync(__dirname)
-//   .filter(function(file) {
-//     return (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js');
-//   })
-//   .forEach(function(file) {
-//     var model = sequelize['import'](path.join(__dirname, file));
-//     db[model.name] = model;
-//   });
-//
-// Object.keys(db).forEach(function(modelName) {
-//   if (db[modelName].associate) {
-//     db[modelName].associate(db);
-//   }
-// });
+var sequelize = new Sequelize (
+env.DATABASE_NAME,
+env.DATABASE_USERNAME,
+env.DATABASE_PASSWORD, {
+    host: env.DATABASE_HOST,
+    dialect: env.DATABASE_DIALECT,
+    define: {
+        underscored: true
+    }
+});
+
 db.AcademicPeriod = require("./academic_period")(sequelize, Sequelize);
 db.Admin          = require("./admin")(sequelize, Sequelize);
 db.Assignment     = require("./assignment")(sequelize, Sequelize);
