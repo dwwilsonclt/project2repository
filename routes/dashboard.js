@@ -10,7 +10,43 @@ router.get("/", isLoggedIn, function(req, res, next) {
         var admin = {
             admin : true
         };
-        res.render("admin/dashboard", admin);
+
+        var hbsObject = {};
+        hbsObject.url = req.protocol + '://' + req.get('host') + req.originalUrl;
+        if (hbsObject.url[hbsObject.url.length - 1] === "/") {
+            hbsObject.url = hbsObject.url.substring(0, hbsObject.url.length-1);
+        }
+        hbsObject.panels = [];
+        hbsObject.panels[0] = {
+            title: "Departments",
+            id: "admin/departments"
+        };
+        hbsObject.panels[1] = {
+            title: "Professors",
+            id: "admin/professors"
+        };
+        hbsObject.panels[2] = {
+            title: "Students",
+            id: "admin/students"
+        };
+        hbsObject.panels[3] = {
+            title: "Courses",
+            id: ""
+        };
+        hbsObject.panels[4] = {
+            title: "Add Department",
+            id: "admin/departments/departments/add-department"
+        };
+        hbsObject.panels[5] = {
+            title: "Add Professor",
+            id: "admin/departments/departments/add-professor"
+        };
+        hbsObject.panels[6] = {
+            title: "Graphic Data",
+            id: "admin/stats"
+        };
+        // res.json(hbsObject);
+        res.render("admin/dashboard", hbsObject);
     } else if (req.session.userType === "Professor") {
         professorHome(req, function(data) {
             if (!data) {

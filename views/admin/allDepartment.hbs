@@ -4,19 +4,19 @@
         <div class="col-md-12">
             <div class="panel panel-default whiteBg">
                 <div class="panel-heading">
-                    <h3 class="panel-title"><a href="/dashboard/admin/departments">Departments</a></h3>
+                    <h3 class="panel-title"><a href="/dashboard/admin/departments">Departments</a>{{#if departmentPage}} > <a href="">{{this.department}}</a>{{/if}}</h3>
                 </div>
                 <div class="panel-body">
                     {{#each panels as |panel|}}
                     <div class="col-md-4">
                         <div class="panel panel-default">
-                            <a href="/dashboard/admin/departments/{{panel.title}}">
+                            <a href="/dashboard/admin/departments{{#if ../departmentPage}}/{{../department}}{{/if}}/{{panel.title}}">
                                 <div class="panel-body">
                                     <div class="page-header">
                                         <h3>{{panel.title}}</h3>
                                         {{#each panel.descriptions as |desc|}}
-                                    <p>{{desc}}</p>
-                                    {{/each}}
+                                        <p>{{desc}}</p>
+                                        {{/each}}
                                     </div>
                                 </div>
                             </a>

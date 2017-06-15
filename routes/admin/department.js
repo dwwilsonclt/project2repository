@@ -8,6 +8,7 @@ router.get("/", isLoggedIn, function(req, res, next) {
         //build a hbsObject with necessary info to pass to render the page
         var hbsObject = {};
         hbsObject.admin = true;
+        hbsObject.departmentsPage = true;
         hbsObject.panels = [];
 
         data.forEach(function(department) {
@@ -19,6 +20,7 @@ router.get("/", isLoggedIn, function(req, res, next) {
             };
             hbsObject.panels.push(obj);
         });
+        // res.json(hbsObject);
         res.render("admin/allDepartment", hbsObject);
     })
     .catch(function(error) {
@@ -26,8 +28,6 @@ router.get("/", isLoggedIn, function(req, res, next) {
     });
 });
 
-
-// localhost:8080/dashboard/admin/departments/depa/add
 router.get("/departments/add-department", isLoggedIn, function (req, res, next) {
     var urlTemp = (req.protocol + '://' + req.get('host') + req.originalUrl).split("/");
     var newUrl = "";
@@ -89,8 +89,6 @@ router.get("/departments/add-professor", isLoggedIn, function (req, res, next) {
     });
 });
 
-
-// localhost:8080/dashboard/admin/departments/:dept_id
 router.get("/:dept_id", isLoggedIn, function(req, res, next) {
     db.Department.findOne({
         where: {
@@ -105,23 +103,40 @@ router.get("/:dept_id", isLoggedIn, function(req, res, next) {
         }]
     })
     .then(function(data) {
-
         var hbsObject = {};
         hbsObject.admin = true;
-        hbsObject.title = data.dataValues.id;
-        hbsObject.desc = data.dataValues.name;
+        hbsObject.departmentPage = true;
+        hbsObject.department = data.dataValues.id;
+        hbsObject.panels = [];
+        hbsObject.panels[0] = {
+            title: "Courses",
+            descriptions: [
+                data.dataValues.courses.length + " courses"
+            ]
+        };
+        hbsObject.panels[1] = {
+            title: "Professors",
+            descriptions: [
+                data.dataValues.professors.length + " professors"
+            ]
+        };
+        hbsObject.panels[2] = {
+            title: "Students",
+            descriptions: [
+                data.dataValues.students.length + " students"
+            ]
+        };
 
-        res.render("admin/departmentPage", hbsObject);
-        // res.json(data);
+        // res.json(hbsObject);
+        // res.render("admin/departmentPage", hbsObject);
+        res.render("admin/allDepartment", hbsObject);
     })
     .catch(function(error) {
         console.log(error);
     });
 });
 
-
-// /departments/:id/courses - all  courses  of specific department
-router.get("/:dept_id/courses", isLoggedIn, function(req, res, next) {
+router.get("/:dept_id/Courses", isLoggedIn, function(req, res, next) {
     db.Course.findAll({
         where: {
             department_id: req.params.dept_id
@@ -141,8 +156,7 @@ router.get("/:dept_id/courses", isLoggedIn, function(req, res, next) {
     });
 });
 
-///departments/:id/courses/:course - see specific course of specific department
-router.get("/:dept_id/courses/:course_id", isLoggedIn, function(req, res, next) {
+router.get("/:dept_id/Courses/:course_id", isLoggedIn, function(req, res, next) {
     db.Course.findOne({
         where: {
             id: req.params.course_id,
@@ -175,8 +189,8 @@ router.get("/:dept_id/courses/:course_id", isLoggedIn, function(req, res, next) 
         console.log(error);
     });
 });
-// /departments/:id/courses/:course/classes/:class - see specific class of a specific course of specific department
-router.get("/:dept_id/courses/:course_id/:class_id", isLoggedIn, function(req, res, next) {
+
+router.get("/:dept_id/Courses/:course_id/:class_id", isLoggedIn, function(req, res, next) {
     db.Class.findOne({
         where: {
             id: req.params.class_id,
@@ -216,8 +230,7 @@ router.get("/:dept_id/courses/:course_id/:class_id", isLoggedIn, function(req, r
     });
 });
 
-// /departments/:id/professors - all professors of specific department
-router.get("/:dept_id/professors", isLoggedIn, function(req, res, next) {
+router.get("/:dept_id/Professors", isLoggedIn, function(req, res, next) {
     db.Professor.findAll({
         where: {
             department_id: req.params.dept_id
@@ -236,18 +249,20 @@ router.get("/:dept_id/professors", isLoggedIn, function(req, res, next) {
     .then(function(data) {
         var hbsObject = {
             admin: true,
-            professors: data,
-            dept: req.params.dept_id
+            isProfessor: true,
+            people: data,
+            dept: req.params.dept_id,
+            title: "Professors"
         };
-        res.render("admin/professors_1", hbsObject);
+        // res.json(hbsObject);
+        res.render("admin/professors-students_1", hbsObject);
     })
     .catch(function(error) {
         console.log(error);
     });
 });
 
-///departments/:id/professors/:professor - choose a specific professors of specific department
-router.get("/:dept_id/professors/:professor_id", isLoggedIn, function(req, res, next) {
+router.get("/:dept_id/Professors/:professor_id", isLoggedIn, function(req, res, next) {
     db.Professor.findOne({
         where: {
             id: req.params.professor_id,
@@ -279,8 +294,8 @@ router.get("/:dept_id/professors/:professor_id", isLoggedIn, function(req, res, 
         console.log(error);
     })
 });
-// /departments/:id/professors/:professor/classes/:class - see specific class of a specific professor of specific department
-router.get("/:dept_id/professors/:professor_id/:class_id", isLoggedIn, function(req, res, next) {
+
+router.get("/:dept_id/Professors/:professor_id/:class_id", isLoggedIn, function(req, res, next) {
     db.Class.findOne({
         where: {
             id: req.params.class_id,
@@ -319,8 +334,8 @@ router.get("/:dept_id/professors/:professor_id/:class_id", isLoggedIn, function(
         console.log(error);
     });
 });
-// /departments/:id/students - all students of specific department
-router.get("/:dept_id/students", isLoggedIn, function(req, res, next) {
+
+router.get("/:dept_id/Students", isLoggedIn, function(req, res, next) {
     db.Student.findAll({
         where: {
             department_id: req.params.dept_id
@@ -335,18 +350,19 @@ router.get("/:dept_id/students", isLoggedIn, function(req, res, next) {
     .then(function(data) {
         var hbsObject = {
             admin: true,
-            students: data,
-            dept: req.params.dept_id
+            isStudent: true,
+            people: data,
+            dept: req.params.dept_id,
+            title: "Students"
         };
-        res.render("admin/students_1", hbsObject);
+        res.render("admin/professors-students_1", hbsObject);
     })
     .catch(function(error) {
         console.log(error);
     });
 });
 
-// /departments/:id/students/:student - choose a specific student of specific department
-router.get("/:dept_id/students/:student_id", isLoggedIn, function(req, res, next) {
+router.get("/:dept_id/Students/:student_id", isLoggedIn, function(req, res, next) {
     db.Student.findOne({
         where: {
             id: req.params.student_id,
@@ -386,8 +402,7 @@ router.get("/:dept_id/students/:student_id", isLoggedIn, function(req, res, next
     });
 });
 
-// /departments/:id/students/:student/:class - see specific class of a specific student of specific department
-router.get("/:dept_id/students/:student_id/:class_id", isLoggedIn, function(req, res, next) {
+router.get("/:dept_id/Students/:student_id/:class_id", isLoggedIn, function(req, res, next) {
     db.Class.findOne({
         where: {
             id: req.params.class_id

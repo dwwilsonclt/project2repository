@@ -3,9 +3,12 @@
         <div class="row">
             <div class="col-md-6">
                 <h2>{{this.person.first_name}} {{this.person.last_name}}</h2>
-                <p>Phone: {{this.person.phone}}</p>
+                <p>Phone: {{#if isProfessor}}{{this.phone}} ext: {{this.phone_extension}}{{else}}{{this.person.phone}}{{/if}}</p>
                 <p>Email: {{this.email}}</p>
                 <p>Department: {{this.department.name}}</p>
+                {{#if isProfessor}}
+                    <p>Office: {{this.room.building_id}} {{this.room.room_number}}</p>
+                {{/if}}
             </div>
             <div class="col-md-6">
                 <p>Address:</p>

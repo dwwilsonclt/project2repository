@@ -3,35 +3,46 @@
         <div class="col-md-12">
             <div class="panel panel-default whiteBg">
                 <div class="panel-heading">
-                    <h3 class="panel-title"><a href="/dashboard/admin/departments">Departments</a> > <a href="/dashboard/admin/departments/{{dept}}">{{dept}}</a> > <a href="#">Students</a> </h3>
+                    <h3 class="panel-title"><a href="/dashboard/admin/departments">Departments</a> > <a href="/dashboard/admin/departments/{{dept}}">{{dept}}</a> > <a href="#">{{title}}</a> </h3>
                 </div>
                 <div class="panel-body">
                     <table id="customTable" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
                         <thead>
+                            {{#if isProfessor}}<th>Room #</th>{{/if}}
                             <th>Last Name</th>
                             <th>First Name</th>
                             <th>Email Address</th>
                             <th>Phone</th>
+                            {{#if isProfessor}}
+                            <th>Extention</th>
+                            {{else if isStudent}}
                             <th>Class Level</th>
+                            {{/if}}
                             <th>Address</th>
                             <th>City</th>
                             <th>State</th>
                             <th>Zip Code</th>
                         </thead>
                         <tbody>
-                            {{#students}}
+                            {{#people}}
                             <tr>
+                                {{#if ../isProfessor}}<td>{{room.building_id}} {{room.room_number}}</td>{{/if}}
                                 <td>{{person.last_name}}</td>
                                 <td>{{person.first_name}}</td>
                                 <td><a href="mailto:{{email}}" target="_top">{{email}}</a></td>
+                                {{#if ../isProfessor}}
+                                <td>{{phone}}</td>
+                                <td>{{phone_extension}}</td>
+                                {{else if ../isStudent}}
                                 <td>{{person.phone}}</td>
                                 <td>{{class_level}}</td>
+                                {{/if}}
                                 <td>{{person.address}}</td>
                                 <td>{{person.city}}</td>
                                 <td>{{person.state}}</td>
                                 <td>{{person.zip_code}}</td>
                             </tr>
-                            {{/students}}
+                            {{/people}}
                         </tbody>
                     </table>
                 </div>

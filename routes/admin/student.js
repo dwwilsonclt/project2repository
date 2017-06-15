@@ -20,8 +20,9 @@ router.get("/", isLoggedIn, function (req, res, next) {
     .then(function(data) {
         var hbsObject = {};
         hbsObject.admin = true;
+        hbsObject.title = "Students";
         hbsObject.url = req.protocol + '://' + req.get('host') + req.originalUrl;
-        hbsObject.students = [];
+        hbsObject.people = [];
         data.forEach(function(student) {
             var obj = {
                 first_name: student.person.first_name,
@@ -31,10 +32,10 @@ router.get("/", isLoggedIn, function (req, res, next) {
                 classes: student.classes.length,
                 id: student.id
             };
-            hbsObject.students.push(obj);
+            hbsObject.people.push(obj);
         });
         // res.json(hbsObject);
-        res.render("admin/students", hbsObject);
+        res.render("admin/professors-students", hbsObject);
     })
     .catch(function(error) {
       console.log(error);
@@ -84,14 +85,14 @@ router.get("/:student", isLoggedIn, function (req, res, next) {
         if (!data) {
             res.send(404);
         } else {
-            data.dataValues.student = true;
+            data.dataValues.admin = true;
             for (var i = 0; i < data.dataValues.classes.length; i++) {
                 data.dataValues.classes[i].schedule.begin_time = moment(data.dataValues.classes[i].schedule.begin_time, "hh:mm:ss").format("h:mm A");
                 data.dataValues.classes[i].schedule.end_time = moment(data.dataValues.classes[i].schedule.end_time, "hh:mm:ss").format("h:mm A");
             }
             data.dataValues.url = req.protocol + '://' + req.get('host') + req.originalUrl;
             // res.json(data.dataValues);
-            res.render("admin/student", data.dataValues)
+            res.render("admin/person", data.dataValues)
         }
     })
     .catch(function(error) {
@@ -156,24 +157,13 @@ router.get("/:student/:class", isLoggedIn, function(req, res, next) {
             id: classInfo.schedule.id
         };
         hbsObject.panels[3] = {
-            title: "Assignments",
-            descriptions: [
-            ],
-            id: 1
-        };
-        hbsObject.panels[4] = {
-            title: "Grades",
-            descriptions: [
-            ]
-        };
-        hbsObject.panels[5] = {
             title: "Students",
             descriptions: [
                 classInfo.students.length + " students"
             ]
         };
         // res.json(hbsObject);
-        res.render("admin/classInfo", hbsObject);
+        res.render("admin/dashboard", hbsObject);
     })
     .catch(function(error) {
         console.log(error);
