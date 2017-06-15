@@ -1,50 +1,58 @@
 <div class="container">
     <div class="row">
         <div class="col-md-6">
-            <h2>{{this.className}} Grades</h2>
-            <table id="customTable" class="table table-striped table-bordered nowrap table-hover" cellspacing="0" width="100%">
-                <thead>
-                    <tr>
-                        <th>Assignment</th>
-                        <th>Grade</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {{#each this.assignments as |assignment|}}
-                        <tr>
-                            <td>{{assignment.name}}</td>
-                            <td>{{assignment.grade}}</td>
-                        </tr>
-                    {{/each}}
-                </tbody>
-            </table>
+            <div class="panel panel-default whiteBg">
+                <div class="panel-heading">{{this.className}} Grades</div>
+                <div class="pane-body">
+                    <table id="customTable" class="table table-striped table-bordered nowrap table-hover" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th>Assignment</th>
+                                <th>Grade</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each this.assignments as |assignment|}}
+                            <tr>
+                                <td>{{assignment.name}}</td>
+                                <td>{{assignment.grade}}</td>
+                            </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
         <div class="col-md-4 col-md-offset-2">
-            <h2>Average</h2>
-            <table id="customTable" class="table table-striped table-bordered nowrap table-hover" cellspacing="0" width="100%">
-                <thead>
-                <tr>
-                    <th>Topic</th>
-                    <th>Average</th>
-                </tr>
-                </thead>
-                <tbody>
-                    {{#each this.averages as |average|}}
-                        <tr>
-                            <td>{{average.name}}</td>
-                            <td>{{average.grade}}</td>
-                        </tr>
-                    {{/each}}
-                    <tr>
-                        <td>Final Grade</td>
-                        <td>{{this.finalGrade}}</td>
-                    </tr>
-                    <tr>
-                        <td>Letter Grade</td>
-                        <td>{{this.letterGrade}}</td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="panel panel-default whiteBg">
+                <div class="panel-heading">Average</div>
+                <div class="panel-body">
+                    <table id="customTable" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th>Topic</th>
+                                <th>Average</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each this.averages as |average|}}
+                            <tr>
+                                <td>{{average.name}}</td>
+                                <td>{{average.grade}}</td>
+                            </tr>
+                            {{/each}}
+                            <tr>
+                                <td>Final Grade</td>
+                                <td>{{this.finalGrade}}</td>
+                            </tr>
+                            <tr>
+                                <td>Letter Grade</td>
+                                <td>{{this.letterGrade}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 </div>
