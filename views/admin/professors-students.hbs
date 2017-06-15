@@ -25,7 +25,13 @@
                                 <td><a href="mailto:{{email}}" target="_top">{{email}}</a></td>
                                 <td>{{classes}}</td>
                                 <td>
-                                    <a href="{{../url}}/{{id}}">
+                                    {{#if ../departmentsStudentPage}}
+                                        <a href="/dashboard/admin/students/{{id}}">
+                                    {{else if ../departmentsProfessorPage}}
+                                        <a href="/dashboard/admin/professors/{{id}}">
+                                    {{else}}
+                                        <a href="{{../url}}/{{id}}">
+                                    {{/if}}
                                         <button type="button" class="btn btn-default" data-id="{{id}}">View</button>
                                     </a>
                                 </td>
