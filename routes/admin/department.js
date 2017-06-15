@@ -247,15 +247,25 @@ router.get("/:dept_id/Professors", isLoggedIn, function(req, res, next) {
         order: ['last_name']
     })
     .then(function(data) {
-        var hbsObject = {
-            admin: true,
-            isProfessor: true,
-            people: data,
-            dept: req.params.dept_id,
-            title: "Professors"
-        };
+        var hbsObject = {};
+        hbsObject.admin = true;
+        hbsObject.title = "Professors";
+        hbsObject.departmentsProfessorPage = true;
+        hbsObject.url = req.protocol + '://' + req.get('host') + req.originalUrl;
+        hbsObject.people = [];
+        data.forEach(function(professor) {
+            var obj = {
+                first_name: professor.person.first_name,
+                last_name: professor.person.last_name,
+                email: professor.email,
+                department: professor.department.id,
+                classes: professor.classes.length,
+                id: professor.id
+            };
+            hbsObject.people.push(obj);
+        });
         // res.json(hbsObject);
-        res.render("admin/professors-students_1", hbsObject);
+        res.render("admin/professors-students", hbsObject);
     })
     .catch(function(error) {
         console.log(error);
@@ -344,18 +354,31 @@ router.get("/:dept_id/Students", isLoggedIn, function(req, res, next) {
             model: db.Person
         }, {
             model: db.Department
+        },{
+            model: db.Class
         }],
         order: ['last_name']
     })
     .then(function(data) {
-        var hbsObject = {
-            admin: true,
-            isStudent: true,
-            people: data,
-            dept: req.params.dept_id,
-            title: "Students"
-        };
-        res.render("admin/professors-students_1", hbsObject);
+        var hbsObject = {};
+        hbsObject.admin = true;
+        hbsObject.title = "Students";
+        hbsObject.departmentsStudentPage = true;
+        hbsObject.url = req.protocol + '://' + req.get('host') + req.originalUrl;
+        hbsObject.people = [];
+        data.forEach(function(student) {
+            var obj = {
+                first_name: student.person.first_name,
+                last_name: student.person.last_name,
+                email: student.email,
+                department: student.department.id,
+                classes: student.classes.length,
+                id: student.id
+            };
+            hbsObject.people.push(obj);
+        });
+        // res.json(hbsObject);
+        res.render("admin/professors-students", hbsObject);
     })
     .catch(function(error) {
         console.log(error);
