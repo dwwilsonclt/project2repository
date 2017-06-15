@@ -10,11 +10,7 @@ router.get("/", isLoggedIn, function(req, res, next) {
         var admin = {
             admin : true
         };
-        res.render("partials/admin/dashboard", admin);
-        // here we will render the Admin homepage
-        // each button/link inside this homepage will have admin in front
-        // now we know that all routes that begin with admin (localhost:8080/dashboard/admin/...)
-        // are for an Admin view
+        res.render("admin/dashboard", admin);
     } else if (req.session.userType === "Professor") {
         professorHome(req, function(data) {
             if (!data) {
