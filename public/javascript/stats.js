@@ -70,9 +70,47 @@ var charts = function() {
     var classLevelChart = function() {
         $.post("/dashboard/admin/stats/chart/2")
          .done(function(data) {
+             AmCharts.addInitHandler(function(chart) {
+                 for(var i = 0; i < chart.graphs.length; i++) {
+                     var graph = chart.graphs[i];
+                     if (graph.autoColor !== true)
+                         continue;
+                     var colorKey = "autoColor-"+i;
+                     graph.lineColorField = colorKey;
+                     graph.fillColorsField = colorKey;
+                     for(var x = 0; x < chart.dataProvider.length; x++) {
+                         var color = chart.colors[x];
+                         chart.dataProvider[x][colorKey] = color;
+                     }
+                 }
+
+                 if (!chart.legend || !chart.legend.enabled || !chart.legend.generateFromData) {
+                     return;
+                 }
+
+                 var categoryField = chart.categoryField;
+                 var colorField = chart.graphs[0].lineColorField || chart.graphs[0].fillColorsField;
+                 var legendData =  chart.dataProvider.map(function(data) {
+                     var markerData = {
+                         "title": data[categoryField] + ": " + data[chart.graphs[0].valueField],
+                         "color": data[colorField]
+                     };
+                     if (!markerData.color) {
+                         markerData.color = chart.graphs[0].lineColor;
+                     }
+                     return markerData;
+                 });
+
+                 chart.legend.data = legendData;
+
+             }, ["serial"]);
+
              var chart = AmCharts.makeChart("chart_2", {
                  type: "serial",
                  theme: "light",
+                 legend: {
+                     generateFromData: true
+                 },
                  autoMargins: false,
                  marginLeft: 70,
                  marginRight: 30,
@@ -100,9 +138,15 @@ var charts = function() {
                          title: "Students",
                          type: "column",
                          valueField: "students",
-                         valueAxis: "studentsAxis"
+                         valueAxis: "studentsAxis",
+                         autoColor: true
                      }
                  ],
+                 chartCursor: {
+                     categoryBalloonEnabled: false,
+                     cursorAlpha: 0,
+                     zoomable: false
+                 },
                  categoryField: "class_level",
                  categoryAxis: {
                      gridPosition: "start",
