@@ -345,7 +345,7 @@ router.get("/:student/classes/:class/Assignments/1/:topic_name/:topic_id", isLog
             var obj = {
                 title: assignment.dataValues.name,
                 descriptions: [
-                  assignment.dataValues.due_date
+                    "Due on: " + moment.tz(moment(assignment.dataValues.due_date).add(5,"hours"), "America/New_York").format("MMM DD, YYYY")
                 ],
                 id: assignment.dataValues.id
             };

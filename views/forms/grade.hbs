@@ -1,37 +1,48 @@
 <div class="container">
-    <div class="row" id="grades">
-        <div class="col-md-3 col-md-offset-4">
-            <div class="row" id="grade-name-title">
-                <label>Name</label>
-            </div>
-            {{#each this.students as |student|}}
-            <div class="row" id="grade-name">
-                {{student.person.first_name}} {{student.person.last_name}}
-            </div>
-            {{/each}}
-            <div class="row"></div>
-        </div>
-        <div class="col-md-1">
-            <form action="/api/assignment-grade" method="POST">
-                <div class="row">
-                    <div class="form-group">
-                        <label>Grade</label>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default whiteBg">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Grades</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row" id="grades">
+                        <div class="col-md-3 col-md-offset-4">
+                            <div class="row" id="grade-name-title">
+                                <label>Name</label>
+                            </div>
+                            {{#each this.students as |student|}}
+                            <div class="row" id="grade-name">
+                                {{student.person.first_name}} {{student.person.last_name}}
+                            </div>
+                            {{/each}}
+                            <div class="row"></div>
+                        </div>
+                        <div class="col-md-1">
+                            <form action="/api/assignment-grade" method="POST">
+                                <div class="row">
+                                    <div class="form-group">
+                                        <label>Grade</label>
+                                    </div>
+                                </div>
+                                {{#each this.students as |student|}}
+                                <div class="row">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="grade" placeholder="90" value="{{#if student.assignment_student.grade}}{{student.assignment_student.grade}}{{/if}}">
+                                        <input type="hidden" name="student_id" value="{{student.id}}">
+                                    </div>
+                                </div>
+                                {{/each}}
+                                <div class="row">
+                                    <input type="hidden" name="assignment_id" value="{{this.students.0.assignment_student.assignment_id}}">
+                                    <input type="hidden" name="sourceUrl" value="{{this.url}}">
+                                    <button type="submit" class="btn btn-default">Submit</button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
-                {{#each this.students as |student|}}
-                <div class="row">
-                    <div class="form-group">
-                        <input type="text" class="form-control" name="grade" placeholder="90" value="{{#if student.assignment_student.grade}}{{student.assignment_student.grade}}{{/if}}">
-                        <input type="hidden" name="student_id" value="{{student.id}}">
-                    </div>
-                </div>
-                {{/each}}
-                <div class="row">
-                    <input type="hidden" name="assignment_id" value="{{this.students.0.assignment_student.assignment_id}}">
-                    <input type="hidden" name="sourceUrl" value="{{this.url}}">
-                    <button type="submit" class="btn btn-default">Submit</button>
-                </div>
-            </form>
+            </div>
         </div>
     </div>
 </div>
