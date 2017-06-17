@@ -3,14 +3,14 @@
         {{#each panels as |panel|}}
             <a href="{{../url}}/{{panel.title}}/{{panel.id}}">
                 <div class="col-md-4">
-                    <div class="panel panel-default whiteBg">
+                    <div class="panel panel-default whiteBg" id="panel">
                         <div class="panel-body">
                             <div class="page-header">
                                 <h3>{{panel.title}}</h3>
-                                {{#each panel.descriptions as |desc|}}
-                                    <p>{{desc}}</p>
-                                {{/each}}
                             </div>
+                            {{#each panel.descriptions as |desc|}}
+                                <p>{{desc}}</p>
+                            {{/each}}
                         </div>
                     </div>
                 </div>

@@ -126,9 +126,7 @@ router.get("/:dept_id", isLoggedIn, function(req, res, next) {
                 data.dataValues.students.length + " students"
             ]
         };
-
         // res.json(hbsObject);
-        // res.render("admin/departmentPage", hbsObject);
         res.render("admin/allDepartment", hbsObject);
     })
     .catch(function(error) {
