@@ -131,6 +131,7 @@ router.get("/:student/:class", isLoggedIn, function(req, res, next) {
         var classInfo = data.dataValues;
         var hbsObject = {};
         hbsObject.professor = true;
+        hbsObject.classInfo = true;
         hbsObject.url = req.protocol + '://' + req.get('host') + req.originalUrl;
         hbsObject.panels = [];
         hbsObject.panels[0] = {

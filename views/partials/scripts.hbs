@@ -16,15 +16,20 @@
 <script src="/javascript/amcharts/themes/chalk.js"></script>
 <script src="/javascript/stats.js"></script>
 <script>
-$(document).ready( function() {
-  $('#customTable').dataTable( {
-    "iDisplayLength": 10,
-    "lengthChange": false
-  } );
-$("#date_of_birth").datepicker({
-    dateFormat: "yy-mm-dd",
-    changeYear: true,
-    yearRange: "1950:2002"
-});
-} )
+    $(document).ready( function() {
+        $('#customTable').dataTable( {
+        "iDisplayLength": 10,
+        "lengthChange": false
+        });
+
+        $("#date_of_birth").datepicker({
+            dateFormat: "yy-mm-dd",
+            changeYear: true,
+            yearRange: "1950:2002"
+        });
+
+        $("#due_date").datepicker({
+            dateFormat: "yy-mm-dd"
+        });
+    })
 </script>
